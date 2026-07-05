@@ -8,7 +8,7 @@ It is designed as a privacy-first, offline-first movement coach.
 
 ## Status
 
-🚧 Early development.
+Early development.
 
 Current focus:
 
@@ -16,6 +16,7 @@ Current focus:
 * Android architecture
 * repository structure
 * exercise metadata model
+* JSON schema validation
 * workout engine foundation
 
 No production Android app exists yet.
@@ -78,6 +79,8 @@ docs/04_database.md
 docs/05_movement_model.md
 docs/06_exercise_model.md
 docs/07_planner_algorithm.md
+docs/09_pain_and_recovery.md
+docs/16_json_schema.md
 docs/20_technology_stack.md
 docs/21_coding_guidelines.md
 docs/22_contributing.md
@@ -114,6 +117,40 @@ The planner selects exercises using metadata such as:
 * recent pain
 * user preference
 
+## JSON schemas and exercise packs
+
+The schema files live in:
+
+```text
+schemas/
+```
+
+The first bundled exercise pack lives in:
+
+```text
+exercise-packs/bundled/isometric-foundations/
+```
+
+The bundled pack currently contains:
+
+* 8 movement patterns
+* 11 exercises
+* muscle reference data
+* joint reference data
+* English translations
+
+The pack can be checked with:
+
+```bash
+python3 scripts/validate-exercise-pack.py
+```
+
+Expected result:
+
+```text
+OK: 11 exercises, 8 movement patterns
+```
+
 ## Android stack
 
 Planned stack:
@@ -128,7 +165,11 @@ Planned stack:
 * Navigation Compose
 * Gradle Kotlin DSL
 
-Exact dependency versions should be managed through `gradle/libs.versions.toml`.
+Exact dependency versions should be managed through:
+
+```text
+gradle/libs.versions.toml
+```
 
 ## External tools
 
