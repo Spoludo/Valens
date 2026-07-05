@@ -54,6 +54,8 @@ DataStore stores lightweight user preferences.
 - kotlinx.serialization
 
 Used for exercise packs, movement patterns, planner snapshots and export/import.
+JSON Schema files under `schemas/` define the external exercise-pack contract. 
+Kotlin Serialization defines the Android runtime models used after validation.
 
 ## Dependency injection
 

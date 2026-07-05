@@ -27,9 +27,10 @@ Highest priority documents:
 7. `docs/06_exercise_model.md`
 8. `docs/07_planner_algorithm.md`
 9. `docs/09_pain_and_recovery.md`
-10. `docs/20_technology_stack.md`
-11. `docs/21_coding_guidelines.md`
-12. `docs/22_contributing.md`
+10. `docs/16_json_schema.md`
+11. `docs/20_technology_stack.md`
+12. `docs/21_coding_guidelines.md`
+13. `docs/22_contributing.md`
 
 If implementation and documentation conflict, ask whether to update the code or the specification.
 
