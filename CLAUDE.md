@@ -6,7 +6,7 @@
 
 Valens is an open-source Android app for healthy aging, adaptive movement training, joint resilience, mobility, balance and long-term physical capacity.
 
-It is not a bodybuilding app, calorie tracker, social fitness app or generic interval timer.
+It is not a bodybuilding app, calorie tracker, social fitness app, or generic interval timer.
 
 The product philosophy is:
 
@@ -20,22 +20,49 @@ Highest priority documents:
 
 1. `docs/00_vision.md`
 2. `docs/01_product_philosophy.md`
-3. `docs/03_architecture.md`
-4. `docs/04_database.md`
-5. `docs/05_movement_model.md`
-6. `docs/06_exercise_model.md`
-7. `docs/07_planner_algorithm.md`
-8. `docs/09_pain_and_recovery.md`
+3. `docs/02_personas.md`
+4. `docs/03_architecture.md`
+5. `docs/04_database.md`
+6. `docs/05_movement_model.md`
+7. `docs/06_exercise_model.md`
+8. `docs/07_planner_algorithm.md`
+9. `docs/09_pain_and_recovery.md`
+10. `docs/20_technology_stack.md`
+11. `docs/21_coding_guidelines.md`
+12. `docs/22_contributing.md`
 
 If implementation and documentation conflict, ask whether to update the code or the specification.
 
-## Architecture rules
+## Repository structure
 
-Use Kotlin, Jetpack Compose, Material 3, Room, DataStore, Kotlin Serialization, Coroutines and Flow.
+Expected repository layout:
 
-Keep domain logic independent of Android UI.
+```text
+Valens/
+├── app/                         # Android app module
+├── docs/                        # Product and technical specifications
+│   └── ADR/                     # Architecture decision records
+├── exercise-packs/              # Data-driven exercise definitions
+│   └── isometric-foundations/
+├── assets/                      # Shared source assets
+│   ├── muscles/
+│   ├── joints/
+│   ├── illustrations/
+│   └── sounds/
+├── external/                    # Git submodules / external generators
+├── .github/
+│   ├── workflows/
+│   └── ISSUE_TEMPLATE/
+├── CLAUDE.md
+├── IMPLEMENTATION_PROMPT_FOR_CLAUDE.md
+└── README.md
+```
 
-Preferred package structure:
+Do not create extra top-level folders unless justified.
+
+## Android package structure
+
+Inside the Android app, prefer this package structure:
 
 ```text
 com.spoludo.valens
@@ -62,6 +89,8 @@ com.spoludo.valens
     └── settings
 ```
 
+Domain code must not depend on Android UI.
+
 ## Core domain rule
 
 The planner reasons about **movement patterns**, not exercise names.
@@ -69,7 +98,7 @@ The planner reasons about **movement patterns**, not exercise names.
 Correct:
 
 ```kotlin
-movementPattern == MovementPattern.SQUAT
+movementPattern.id == "squat"
 ```
 
 Incorrect:
