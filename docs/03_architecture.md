@@ -107,7 +107,7 @@ The Workout Engine does not decide what should be trained.
 
 ### Exercise Library Engine
 
-Loads and validates exercise definitions.
+The Exercise Library Engine loads exercise packs from `exercise-packs/bundled/`, validates them against `schemas/`, and exposes typed domain models to the planner.
 
 Responsibilities:
 
@@ -179,10 +179,18 @@ Exercises are implementations of movement patterns.
 ## 7. Data flow
 
 ```text
-Exercise JSON Packs
+JSON Schemas
+        │
+        ▼
+Bundled Exercise Packs
         │
         ▼
 Exercise Library Engine
+        │
+        ├── validates schema version
+        ├── validates references
+        ├── loads translations
+        └── exposes typed exercise metadata
         │
         ├──────────────┐
         ▼              │

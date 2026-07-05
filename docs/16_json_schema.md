@@ -11,7 +11,12 @@
 
 Valens exercise packs are data-driven.
 
-This document defines the schema direction. Formal JSON Schema files should be added later.
+This document defines the role of JSON Schema in Valens and points to the canonical schema files.
+
+The canonical JSON Schema files live in:
+
+```text
+schemas/
 
 ---
 

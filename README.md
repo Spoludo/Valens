@@ -47,8 +47,10 @@ Valens/
 ├── app/                         # Android application module
 ├── docs/                        # Specifications and architecture docs
 │   └── ADR/                     # Architecture Decision Records
+├── schemas/                     # JSON Schema files for exercise-pack validation
 ├── exercise-packs/              # JSON/YAML exercise definitions
-│   └── isometric-foundations/
+│   └── bundled/
+│       └── isometric-foundations/
 ├── assets/                      # Source assets
 │   ├── muscles/
 │   ├── joints/

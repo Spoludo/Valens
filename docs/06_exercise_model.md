@@ -125,9 +125,13 @@ Each muscle entry may include intensity:
 
 ```json
 {
-  "muscleId": "quadriceps",
-  "role": "primary",
-  "load": 0.8
+  "muscles": {
+    "primary": [
+      { "id": "quadriceps", "load": 0.8 }
+    ],
+    "secondary": [],
+    "stabilizers": []
+  }
 }
 ```
 
@@ -141,9 +145,11 @@ Example:
 
 ```json
 {
-  "knee": 0.8,
-  "hip": 0.5,
-  "lumbar_spine": 0.2,
+  "left_knee": 0.8,
+  "right_knee": 0.8,
+  "left_hip": 0.5,
+  "right_hip": 0.5,
+  "lumbar_spine": 0.2  "lumbar_spine": 0.2,
   "shoulder": 0.0,
   "wrist": 0.0
 }
@@ -293,9 +299,11 @@ MVP can ship placeholders.
     "stabilizers": ["core"]
   },
   "jointStress": {
-    "knee": 0.6,
-    "hip": 0.3,
-    "lumbar_spine": 0.1
+    "left_knee": 0.8,
+    "right_knee": 0.8,
+    "left_hip": 0.5,
+    "right_hip": 0.5,
+    "lumbar_spine": 0.2
   },
   "defaultPrescription": {
     "sets": 3,
