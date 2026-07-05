@@ -1,0 +1,125 @@
+{
+  "id": "single_leg_balance_hold",
+  "schemaVersion": "0.1.0",
+  "nameKey": "exercise.single_leg_balance_hold.name",
+  "descriptionKey": "exercise.single_leg_balance_hold.description",
+  "type": "balance",
+  "movementPatternId": "single_leg_balance",
+  "exerciseFamilyId": "single_leg_balance",
+  "difficulty": 1,
+  "equipment": [
+    "none"
+  ],
+  "homeFriendly": true,
+  "sides": "left_right",
+  "defaultPrescription": {
+    "sets": 2,
+    "holdSeconds": 20,
+    "restSeconds": 20,
+    "intensityTarget": 7
+  },
+  "muscles": {
+    "primary": [
+      {
+        "id": "glute_medius",
+        "load": 0.4
+      },
+      {
+        "id": "calves",
+        "load": 0.4
+      }
+    ],
+    "secondary": [
+      {
+        "id": "tibialis_anterior",
+        "load": 0.3
+      },
+      {
+        "id": "core",
+        "load": 0.3
+      }
+    ],
+    "stabilizers": [
+      {
+        "id": "core",
+        "load": 0.2
+      }
+    ]
+  },
+  "jointStress": {
+    "left_ankle": 0.3,
+    "right_ankle": 0.3,
+    "left_knee": 0.1,
+    "right_knee": 0.1,
+    "left_hip": 0.2,
+    "right_hip": 0.2
+  },
+  "fatigueCost": {
+    "global": 2,
+    "local": {
+      "calves": 3,
+      "glute_medius": 3,
+      "core": 2
+    },
+    "joint": {
+      "left_ankle": 3,
+      "right_ankle": 3
+    }
+  },
+  "progression": [
+    {
+      "id": "balance_supported_15s",
+      "labelKey": "progression.balance_supported_15s",
+      "holdSeconds": 15,
+      "difficulty": 1
+    },
+    {
+      "id": "balance_unsupported_20s",
+      "labelKey": "progression.balance_unsupported_20s",
+      "holdSeconds": 20,
+      "difficulty": 2
+    },
+    {
+      "id": "balance_unsupported_45s",
+      "labelKey": "progression.balance_unsupported_45s",
+      "holdSeconds": 45,
+      "difficulty": 3
+    },
+    {
+      "id": "balance_head_turns_30s",
+      "labelKey": "progression.balance_head_turns_30s",
+      "holdSeconds": 30,
+      "difficulty": 4
+    }
+  ],
+  "regressions": [
+    "supported_single_leg_balance"
+  ],
+  "alternatives": [
+    "calf_raise_hold"
+  ],
+  "contraindications": [
+    "dizziness"
+  ],
+  "cues": {
+    "setup": [
+      "exercise.single_leg_balance_hold.cue.setup.1",
+      "exercise.single_leg_balance_hold.cue.setup.2"
+    ],
+    "during": [
+      "exercise.single_leg_balance_hold.cue.during.1",
+      "exercise.single_leg_balance_hold.cue.during.2"
+    ],
+    "stopIf": [
+      "exercise.single_leg_balance_hold.cue.stop_if.1",
+      "exercise.single_leg_balance_hold.cue.stop_if.2"
+    ]
+  },
+  "assets": {
+    "illustration": "assets/illustrations/single_leg_balance_hold.svg",
+    "muscleMapFront": "assets/muscles/single_leg_balance_hold_front.svg",
+    "muscleMapBack": "assets/muscles/single_leg_balance_hold_back.svg",
+    "jointMapFront": "assets/joints/single_leg_balance_hold_front.svg",
+    "jointMapBack": "assets/joints/single_leg_balance_hold_back.svg"
+  }
+}

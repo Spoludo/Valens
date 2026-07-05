@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "0.1.0",
+  "joints": [
+    {
+      "id": "neck",
+      "nameKey": "joint.neck",
+      "region": "neck",
+      "side": "midline"
+    },
+    {
+      "id": "left_shoulder",
+      "nameKey": "joint.left_shoulder",
+      "region": "shoulder",
+      "side": "left"
+    },
+    {
+      "id": "right_shoulder",
+      "nameKey": "joint.right_shoulder",
+      "region": "shoulder",
+      "side": "right"
+    },
+    {
+      "id": "left_elbow",
+      "nameKey": "joint.left_elbow",
+      "region": "elbow",
+      "side": "left"
+    },
+    {
+      "id": "right_elbow",
+      "nameKey": "joint.right_elbow",
+      "region": "elbow",
+      "side": "right"
+    },
+    {
+      "id": "left_wrist",
+      "nameKey": "joint.left_wrist",
+      "region": "wrist",
+      "side": "left"
+    },
+    {
+      "id": "right_wrist",
+      "nameKey": "joint.right_wrist",
+      "region": "wrist",
+      "side": "right"
+    },
+    {
+      "id": "lumbar_spine",
+      "nameKey": "joint.lumbar_spine",
+      "region": "spine",
+      "side": "midline"
+    },
+    {
+      "id": "left_hip",
+      "nameKey": "joint.left_hip",
+      "region": "hip",
+      "side": "left"
+    },
+    {
+      "id": "right_hip",
+      "nameKey": "joint.right_hip",
+      "region": "hip",
+      "side": "right"
+    },
+    {
+      "id": "left_knee",
+      "nameKey": "joint.left_knee",
+      "region": "knee",
+      "side": "left"
+    },
+    {
+      "id": "right_knee",
+      "nameKey": "joint.right_knee",
+      "region": "knee",
+      "side": "right"
+    },
+    {
+      "id": "left_ankle",
+      "nameKey": "joint.left_ankle",
+      "region": "ankle",
+      "side": "left"
+    },
+    {
+      "id": "right_ankle",
+      "nameKey": "joint.right_ankle",
+      "region": "ankle",
+      "side": "right"
+    }
+  ]
+}

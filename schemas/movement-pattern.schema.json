@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Valens Movement Pattern",
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "localizedKey": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_.-]+$"
+    },
+    "zeroToOne": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "required": [
+    "id",
+    "domain",
+    "category",
+    "nameKey",
+    "descriptionKey",
+    "primaryCapacities",
+    "typicalMuscles",
+    "typicalJoints",
+    "recommendedWeeklyFrequency",
+    "recoveryCost"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "domain": {
+      "enum": [
+        "strength",
+        "mobility",
+        "balance",
+        "endurance",
+        "recovery",
+        "assessment"
+      ]
+    },
+    "category": {
+      "type": "string"
+    },
+    "nameKey": {
+      "$ref": "#/$defs/localizedKey"
+    },
+    "descriptionKey": {
+      "$ref": "#/$defs/localizedKey"
+    },
+    "primaryCapacities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "typicalMuscles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "uniqueItems": true
+    },
+    "typicalJoints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "uniqueItems": true
+    },
+    "functionalPurposeKey": {
+      "$ref": "#/$defs/localizedKey"
+    },
+    "recommendedWeeklyFrequency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "min",
+        "target",
+        "max"
+      ],
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "target": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "minimumEffectiveDoseSeconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "recoveryCost": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Valens Joint",
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "localizedKey": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_.-]+$"
+    },
+    "zeroToOne": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "required": [
+    "id",
+    "nameKey",
+    "region"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "nameKey": {
+      "$ref": "#/$defs/localizedKey"
+    },
+    "region": {
+      "enum": [
+        "neck",
+        "shoulder",
+        "elbow",
+        "wrist",
+        "spine",
+        "hip",
+        "knee",
+        "ankle",
+        "foot"
+      ]
+    },
+    "side": {
+      "enum": [
+        "left",
+        "right",
+        "bilateral",
+        "midline"
+      ]
+    },
+    "sensitiveByDefault": {
+      "type": "boolean"
+    }
+  }
+}

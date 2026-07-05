@@ -1,0 +1,135 @@
+{
+  "id": "horse_stance",
+  "schemaVersion": "0.1.0",
+  "nameKey": "exercise.horse_stance.name",
+  "descriptionKey": "exercise.horse_stance.description",
+  "type": "isometric",
+  "movementPatternId": "squat",
+  "exerciseFamilyId": "horse_stance",
+  "difficulty": 3,
+  "equipment": [
+    "none"
+  ],
+  "homeFriendly": true,
+  "sides": "bilateral",
+  "defaultPrescription": {
+    "sets": 3,
+    "holdSeconds": 20,
+    "restSeconds": 60,
+    "intensityTarget": 7
+  },
+  "muscles": {
+    "primary": [
+      {
+        "id": "quadriceps",
+        "load": 0.8
+      },
+      {
+        "id": "glutes",
+        "load": 0.6
+      }
+    ],
+    "secondary": [
+      {
+        "id": "adductors",
+        "load": 0.6
+      },
+      {
+        "id": "hamstrings",
+        "load": 0.3
+      }
+    ],
+    "stabilizers": [
+      {
+        "id": "core",
+        "load": 0.4
+      }
+    ]
+  },
+  "jointStress": {
+    "left_knee": 0.7,
+    "right_knee": 0.7,
+    "left_hip": 0.6,
+    "right_hip": 0.6,
+    "left_ankle": 0.3,
+    "right_ankle": 0.3
+  },
+  "fatigueCost": {
+    "global": 7,
+    "local": {
+      "quadriceps": 8,
+      "glutes": 6,
+      "adductors": 6
+    },
+    "joint": {
+      "left_knee": 7,
+      "right_knee": 7,
+      "left_hip": 5,
+      "right_hip": 5
+    }
+  },
+  "progression": [
+    {
+      "id": "horse_high_15s",
+      "labelKey": "progression.horse_high_15s",
+      "holdSeconds": 15,
+      "difficulty": 1
+    },
+    {
+      "id": "horse_high_25s",
+      "labelKey": "progression.horse_high_25s",
+      "holdSeconds": 25,
+      "difficulty": 2
+    },
+    {
+      "id": "horse_standard_30s",
+      "labelKey": "progression.horse_standard_30s",
+      "holdSeconds": 30,
+      "difficulty": 3
+    },
+    {
+      "id": "horse_standard_45s",
+      "labelKey": "progression.horse_standard_45s",
+      "holdSeconds": 45,
+      "difficulty": 4
+    },
+    {
+      "id": "horse_standard_60s",
+      "labelKey": "progression.horse_standard_60s",
+      "holdSeconds": 60,
+      "difficulty": 5
+    }
+  ],
+  "regressions": [
+    "high_horse_stance",
+    "wall_sit_120deg"
+  ],
+  "alternatives": [
+    "wall_sit",
+    "supported_split_squat_hold"
+  ],
+  "contraindications": [
+    "acute_knee_pain"
+  ],
+  "cues": {
+    "setup": [
+      "exercise.horse_stance.cue.setup.1",
+      "exercise.horse_stance.cue.setup.2"
+    ],
+    "during": [
+      "exercise.horse_stance.cue.during.1",
+      "exercise.horse_stance.cue.during.2"
+    ],
+    "stopIf": [
+      "exercise.horse_stance.cue.stop_if.1",
+      "exercise.horse_stance.cue.stop_if.2"
+    ]
+  },
+  "assets": {
+    "illustration": "assets/illustrations/horse_stance.svg",
+    "muscleMapFront": "assets/muscles/horse_stance_front.svg",
+    "muscleMapBack": "assets/muscles/horse_stance_back.svg",
+    "jointMapFront": "assets/joints/horse_stance_front.svg",
+    "jointMapBack": "assets/joints/horse_stance_back.svg"
+  }
+}

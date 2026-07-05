@@ -1,0 +1,132 @@
+{
+  "id": "plank_hold",
+  "schemaVersion": "0.1.0",
+  "nameKey": "exercise.plank_hold.name",
+  "descriptionKey": "exercise.plank_hold.description",
+  "type": "isometric",
+  "movementPatternId": "anti_extension_core",
+  "exerciseFamilyId": "plank",
+  "difficulty": 2,
+  "equipment": [
+    "floor",
+    "mat"
+  ],
+  "homeFriendly": true,
+  "sides": "midline",
+  "defaultPrescription": {
+    "sets": 3,
+    "holdSeconds": 30,
+    "restSeconds": 60,
+    "intensityTarget": 7
+  },
+  "muscles": {
+    "primary": [
+      {
+        "id": "core",
+        "load": 0.8
+      },
+      {
+        "id": "transverse_abdominis",
+        "load": 0.7
+      }
+    ],
+    "secondary": [
+      {
+        "id": "glutes",
+        "load": 0.4
+      },
+      {
+        "id": "deltoids",
+        "load": 0.4
+      }
+    ],
+    "stabilizers": [
+      {
+        "id": "shoulder_stabilizers",
+        "load": 0.5
+      },
+      {
+        "id": "serratus_anterior",
+        "load": 0.4
+      }
+    ]
+  },
+  "jointStress": {
+    "lumbar_spine": 0.3,
+    "left_shoulder": 0.3,
+    "right_shoulder": 0.3,
+    "left_wrist": 0.1,
+    "right_wrist": 0.1
+  },
+  "fatigueCost": {
+    "global": 5,
+    "local": {
+      "core": 7,
+      "deltoids": 3
+    },
+    "joint": {
+      "lumbar_spine": 3,
+      "left_shoulder": 3,
+      "right_shoulder": 3
+    }
+  },
+  "progression": [
+    {
+      "id": "plank_knees_20s",
+      "labelKey": "progression.plank_knees_20s",
+      "holdSeconds": 20,
+      "difficulty": 1
+    },
+    {
+      "id": "plank_forearm_30s",
+      "labelKey": "progression.plank_forearm_30s",
+      "holdSeconds": 30,
+      "difficulty": 2
+    },
+    {
+      "id": "plank_forearm_45s",
+      "labelKey": "progression.plank_forearm_45s",
+      "holdSeconds": 45,
+      "difficulty": 3
+    },
+    {
+      "id": "plank_forearm_60s",
+      "labelKey": "progression.plank_forearm_60s",
+      "holdSeconds": 60,
+      "difficulty": 4
+    }
+  ],
+  "regressions": [
+    "kneeling_plank_hold"
+  ],
+  "alternatives": [
+    "hollow_body_hold",
+    "bear_crawl_hold"
+  ],
+  "contraindications": [
+    "acute_low_back_pain",
+    "acute_shoulder_pain",
+    "requires_floor_access"
+  ],
+  "cues": {
+    "setup": [
+      "exercise.plank_hold.cue.setup.1",
+      "exercise.plank_hold.cue.setup.2"
+    ],
+    "during": [
+      "exercise.plank_hold.cue.during.1",
+      "exercise.plank_hold.cue.during.2"
+    ],
+    "stopIf": [
+      "exercise.plank_hold.cue.stop_if.1",
+      "exercise.plank_hold.cue.stop_if.2"
+    ]
+  },
+  "assets": {
+    "illustration": "assets/illustrations/plank_hold.svg",
+    "muscleMapFront": "assets/muscles/plank_hold_front.svg",
+    "muscleMapBack": "assets/muscles/plank_hold_back.svg",
+    "jointMapFront": "assets/joints/plank_hold_front.svg",
+    "jointMapBack": "assets/joints/plank_hold_back.svg"
+  }
+}

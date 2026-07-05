@@ -1,0 +1,255 @@
+{
+  "schemaVersion": "0.1.0",
+  "patterns": [
+    {
+      "id": "anti_extension_core",
+      "domain": "strength",
+      "category": "core_stability",
+      "nameKey": "movement.anti_extension_core.name",
+      "descriptionKey": "movement.anti_extension_core.description",
+      "primaryCapacities": [
+        "core_endurance",
+        "spinal_control"
+      ],
+      "typicalMuscles": [
+        "core",
+        "transverse_abdominis",
+        "rectus_abdominis",
+        "obliques"
+      ],
+      "typicalJoints": [
+        "lumbar_spine"
+      ],
+      "functionalPurposeKey": "movement.anti_extension_core.purpose",
+      "recommendedWeeklyFrequency": {
+        "min": 2,
+        "target": 4,
+        "max": 6
+      },
+      "minimumEffectiveDoseSeconds": 60,
+      "recoveryCost": 3
+    },
+    {
+      "id": "squat",
+      "domain": "strength",
+      "category": "lower_body_squat",
+      "nameKey": "movement.squat.name",
+      "descriptionKey": "movement.squat.description",
+      "primaryCapacities": [
+        "lower_body_strength",
+        "knee_tolerance"
+      ],
+      "typicalMuscles": [
+        "quadriceps",
+        "glutes",
+        "hamstrings",
+        "adductors"
+      ],
+      "typicalJoints": [
+        "left_knee",
+        "right_knee",
+        "left_hip",
+        "right_hip",
+        "left_ankle",
+        "right_ankle"
+      ],
+      "functionalPurposeKey": "movement.squat.purpose",
+      "recommendedWeeklyFrequency": {
+        "min": 1,
+        "target": 3,
+        "max": 5
+      },
+      "minimumEffectiveDoseSeconds": 60,
+      "recoveryCost": 6
+    },
+    {
+      "id": "hip_extension",
+      "domain": "strength",
+      "category": "lower_body_hinge",
+      "nameKey": "movement.hip_extension.name",
+      "descriptionKey": "movement.hip_extension.description",
+      "primaryCapacities": [
+        "hip_extension_strength",
+        "posterior_chain_strength"
+      ],
+      "typicalMuscles": [
+        "glutes",
+        "hamstrings",
+        "erector_spinae"
+      ],
+      "typicalJoints": [
+        "left_hip",
+        "right_hip",
+        "lumbar_spine"
+      ],
+      "functionalPurposeKey": "movement.hip_extension.purpose",
+      "recommendedWeeklyFrequency": {
+        "min": 2,
+        "target": 4,
+        "max": 6
+      },
+      "minimumEffectiveDoseSeconds": 60,
+      "recoveryCost": 4
+    },
+    {
+      "id": "horizontal_push",
+      "domain": "strength",
+      "category": "upper_body_push",
+      "nameKey": "movement.horizontal_push.name",
+      "descriptionKey": "movement.horizontal_push.description",
+      "primaryCapacities": [
+        "upper_push_strength",
+        "shoulder_stability"
+      ],
+      "typicalMuscles": [
+        "pectorals",
+        "deltoids",
+        "triceps",
+        "serratus_anterior"
+      ],
+      "typicalJoints": [
+        "left_shoulder",
+        "right_shoulder",
+        "left_elbow",
+        "right_elbow",
+        "left_wrist",
+        "right_wrist"
+      ],
+      "functionalPurposeKey": "movement.horizontal_push.purpose",
+      "recommendedWeeklyFrequency": {
+        "min": 1,
+        "target": 3,
+        "max": 5
+      },
+      "minimumEffectiveDoseSeconds": 60,
+      "recoveryCost": 4
+    },
+    {
+      "id": "vertical_push",
+      "domain": "strength",
+      "category": "upper_body_push",
+      "nameKey": "movement.vertical_push.name",
+      "descriptionKey": "movement.vertical_push.description",
+      "primaryCapacities": [
+        "shoulder_strength",
+        "shoulder_stability"
+      ],
+      "typicalMuscles": [
+        "deltoids",
+        "triceps",
+        "serratus_anterior",
+        "shoulder_stabilizers"
+      ],
+      "typicalJoints": [
+        "left_shoulder",
+        "right_shoulder",
+        "left_wrist",
+        "right_wrist",
+        "neck"
+      ],
+      "functionalPurposeKey": "movement.vertical_push.purpose",
+      "recommendedWeeklyFrequency": {
+        "min": 1,
+        "target": 2,
+        "max": 4
+      },
+      "minimumEffectiveDoseSeconds": 30,
+      "recoveryCost": 6
+    },
+    {
+      "id": "quadruped_stability",
+      "domain": "strength",
+      "category": "core_stability",
+      "nameKey": "movement.quadruped_stability.name",
+      "descriptionKey": "movement.quadruped_stability.description",
+      "primaryCapacities": [
+        "core_endurance",
+        "shoulder_stability",
+        "hip_stability"
+      ],
+      "typicalMuscles": [
+        "core",
+        "deltoids",
+        "serratus_anterior",
+        "glutes",
+        "shoulder_stabilizers"
+      ],
+      "typicalJoints": [
+        "left_shoulder",
+        "right_shoulder",
+        "left_wrist",
+        "right_wrist",
+        "left_hip",
+        "right_hip"
+      ],
+      "functionalPurposeKey": "movement.quadruped_stability.purpose",
+      "recommendedWeeklyFrequency": {
+        "min": 1,
+        "target": 3,
+        "max": 5
+      },
+      "minimumEffectiveDoseSeconds": 45,
+      "recoveryCost": 4
+    },
+    {
+      "id": "calf_raise",
+      "domain": "strength",
+      "category": "lower_leg",
+      "nameKey": "movement.calf_raise.name",
+      "descriptionKey": "movement.calf_raise.description",
+      "primaryCapacities": [
+        "ankle_resilience",
+        "lower_leg_endurance"
+      ],
+      "typicalMuscles": [
+        "calves"
+      ],
+      "typicalJoints": [
+        "left_ankle",
+        "right_ankle"
+      ],
+      "functionalPurposeKey": "movement.calf_raise.purpose",
+      "recommendedWeeklyFrequency": {
+        "min": 2,
+        "target": 4,
+        "max": 7
+      },
+      "minimumEffectiveDoseSeconds": 60,
+      "recoveryCost": 2
+    },
+    {
+      "id": "single_leg_balance",
+      "domain": "balance",
+      "category": "balance",
+      "nameKey": "movement.single_leg_balance.name",
+      "descriptionKey": "movement.single_leg_balance.description",
+      "primaryCapacities": [
+        "balance",
+        "ankle_resilience",
+        "hip_stability"
+      ],
+      "typicalMuscles": [
+        "glute_medius",
+        "calves",
+        "tibialis_anterior",
+        "core"
+      ],
+      "typicalJoints": [
+        "left_ankle",
+        "right_ankle",
+        "left_hip",
+        "right_hip",
+        "left_knee",
+        "right_knee"
+      ],
+      "functionalPurposeKey": "movement.single_leg_balance.purpose",
+      "recommendedWeeklyFrequency": {
+        "min": 2,
+        "target": 5,
+        "max": 7
+      },
+      "minimumEffectiveDoseSeconds": 30,
+      "recoveryCost": 1
+    }
+  ]
+}

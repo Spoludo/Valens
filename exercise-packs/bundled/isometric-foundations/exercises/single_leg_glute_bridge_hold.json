@@ -1,0 +1,126 @@
+{
+  "id": "single_leg_glute_bridge_hold",
+  "schemaVersion": "0.1.0",
+  "nameKey": "exercise.single_leg_glute_bridge_hold.name",
+  "descriptionKey": "exercise.single_leg_glute_bridge_hold.description",
+  "type": "isometric",
+  "movementPatternId": "hip_extension",
+  "exerciseFamilyId": "single_leg_glute_bridge",
+  "difficulty": 3,
+  "equipment": [
+    "floor",
+    "mat"
+  ],
+  "homeFriendly": true,
+  "sides": "left_right",
+  "defaultPrescription": {
+    "sets": 3,
+    "holdSeconds": 20,
+    "restSeconds": 45,
+    "intensityTarget": 7
+  },
+  "muscles": {
+    "primary": [
+      {
+        "id": "glutes",
+        "load": 0.9
+      },
+      {
+        "id": "hamstrings",
+        "load": 0.5
+      }
+    ],
+    "secondary": [
+      {
+        "id": "glute_medius",
+        "load": 0.5
+      },
+      {
+        "id": "core",
+        "load": 0.3
+      }
+    ],
+    "stabilizers": [
+      {
+        "id": "erector_spinae",
+        "load": 0.2
+      }
+    ]
+  },
+  "jointStress": {
+    "left_hip": 0.4,
+    "right_hip": 0.4,
+    "lumbar_spine": 0.2,
+    "left_knee": 0.2,
+    "right_knee": 0.2
+  },
+  "fatigueCost": {
+    "global": 5,
+    "local": {
+      "glutes": 8,
+      "hamstrings": 4,
+      "core": 3
+    },
+    "joint": {
+      "left_hip": 4,
+      "right_hip": 4
+    }
+  },
+  "progression": [
+    {
+      "id": "bridge_two_leg_20s",
+      "labelKey": "progression.bridge_two_leg_20s",
+      "holdSeconds": 20,
+      "difficulty": 1
+    },
+    {
+      "id": "bridge_single_leg_15s",
+      "labelKey": "progression.bridge_single_leg_15s",
+      "holdSeconds": 15,
+      "difficulty": 2
+    },
+    {
+      "id": "bridge_single_leg_25s",
+      "labelKey": "progression.bridge_single_leg_25s",
+      "holdSeconds": 25,
+      "difficulty": 3
+    },
+    {
+      "id": "bridge_single_leg_45s",
+      "labelKey": "progression.bridge_single_leg_45s",
+      "holdSeconds": 45,
+      "difficulty": 4
+    }
+  ],
+  "regressions": [
+    "two_leg_glute_bridge_hold"
+  ],
+  "alternatives": [
+    "reverse_table_hold"
+  ],
+  "contraindications": [
+    "acute_low_back_pain",
+    "requires_floor_access"
+  ],
+  "cues": {
+    "setup": [
+      "exercise.single_leg_glute_bridge_hold.cue.setup.1",
+      "exercise.single_leg_glute_bridge_hold.cue.setup.2"
+    ],
+    "during": [
+      "exercise.single_leg_glute_bridge_hold.cue.during.1",
+      "exercise.single_leg_glute_bridge_hold.cue.during.2"
+    ],
+    "stopIf": [
+      "exercise.single_leg_glute_bridge_hold.cue.stop_if.1",
+      "exercise.single_leg_glute_bridge_hold.cue.stop_if.2"
+    ]
+  },
+  "assets": {
+    "illustration": "assets/illustrations/single_leg_glute_bridge_hold.svg",
+    "muscleMapFront": "assets/muscles/single_leg_glute_bridge_hold_front.svg",
+    "muscleMapBack": "assets/muscles/single_leg_glute_bridge_hold_back.svg",
+    "jointMapFront": "assets/joints/single_leg_glute_bridge_hold_front.svg",
+    "jointMapBack": "assets/joints/single_leg_glute_bridge_hold_back.svg"
+  }
+}

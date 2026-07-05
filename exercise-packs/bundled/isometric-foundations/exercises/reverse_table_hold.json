@@ -1,0 +1,135 @@
+{
+  "id": "reverse_table_hold",
+  "schemaVersion": "0.1.0",
+  "nameKey": "exercise.reverse_table_hold.name",
+  "descriptionKey": "exercise.reverse_table_hold.description",
+  "type": "isometric",
+  "movementPatternId": "hip_extension",
+  "exerciseFamilyId": "reverse_table",
+  "difficulty": 3,
+  "equipment": [
+    "floor",
+    "mat"
+  ],
+  "homeFriendly": true,
+  "sides": "bilateral",
+  "defaultPrescription": {
+    "sets": 3,
+    "holdSeconds": 20,
+    "restSeconds": 45,
+    "intensityTarget": 7
+  },
+  "muscles": {
+    "primary": [
+      {
+        "id": "glutes",
+        "load": 0.8
+      },
+      {
+        "id": "hamstrings",
+        "load": 0.5
+      }
+    ],
+    "secondary": [
+      {
+        "id": "erector_spinae",
+        "load": 0.4
+      },
+      {
+        "id": "deltoids",
+        "load": 0.3
+      }
+    ],
+    "stabilizers": [
+      {
+        "id": "shoulder_stabilizers",
+        "load": 0.4
+      },
+      {
+        "id": "core",
+        "load": 0.3
+      }
+    ]
+  },
+  "jointStress": {
+    "left_shoulder": 0.4,
+    "right_shoulder": 0.4,
+    "left_wrist": 0.4,
+    "right_wrist": 0.4,
+    "lumbar_spine": 0.2,
+    "left_hip": 0.3,
+    "right_hip": 0.3
+  },
+  "fatigueCost": {
+    "global": 5,
+    "local": {
+      "glutes": 7,
+      "hamstrings": 4,
+      "deltoids": 3
+    },
+    "joint": {
+      "left_wrist": 4,
+      "right_wrist": 4,
+      "left_shoulder": 4,
+      "right_shoulder": 4
+    }
+  },
+  "progression": [
+    {
+      "id": "reverse_low_15s",
+      "labelKey": "progression.reverse_low_15s",
+      "holdSeconds": 15,
+      "difficulty": 1
+    },
+    {
+      "id": "reverse_bent_knee_20s",
+      "labelKey": "progression.reverse_bent_knee_20s",
+      "holdSeconds": 20,
+      "difficulty": 2
+    },
+    {
+      "id": "reverse_bent_knee_30s",
+      "labelKey": "progression.reverse_bent_knee_30s",
+      "holdSeconds": 30,
+      "difficulty": 3
+    },
+    {
+      "id": "reverse_standard_45s",
+      "labelKey": "progression.reverse_standard_45s",
+      "holdSeconds": 45,
+      "difficulty": 4
+    }
+  ],
+  "regressions": [
+    "glute_bridge_hold"
+  ],
+  "alternatives": [
+    "single_leg_glute_bridge_hold"
+  ],
+  "contraindications": [
+    "acute_shoulder_pain",
+    "acute_wrist_pain",
+    "requires_floor_access"
+  ],
+  "cues": {
+    "setup": [
+      "exercise.reverse_table_hold.cue.setup.1",
+      "exercise.reverse_table_hold.cue.setup.2"
+    ],
+    "during": [
+      "exercise.reverse_table_hold.cue.during.1",
+      "exercise.reverse_table_hold.cue.during.2"
+    ],
+    "stopIf": [
+      "exercise.reverse_table_hold.cue.stop_if.1",
+      "exercise.reverse_table_hold.cue.stop_if.2"
+    ]
+  },
+  "assets": {
+    "illustration": "assets/illustrations/reverse_table_hold.svg",
+    "muscleMapFront": "assets/muscles/reverse_table_hold_front.svg",
+    "muscleMapBack": "assets/muscles/reverse_table_hold_back.svg",
+    "jointMapFront": "assets/joints/reverse_table_hold_front.svg",
+    "jointMapBack": "assets/joints/reverse_table_hold_back.svg"
+  }
+}

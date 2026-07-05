@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "0.1.0",
+  "muscles": [
+    {
+      "id": "core",
+      "nameKey": "muscle.core",
+      "region": "core",
+      "side": "midline"
+    },
+    {
+      "id": "transverse_abdominis",
+      "nameKey": "muscle.transverse_abdominis",
+      "region": "core",
+      "side": "midline"
+    },
+    {
+      "id": "rectus_abdominis",
+      "nameKey": "muscle.rectus_abdominis",
+      "region": "core",
+      "side": "midline"
+    },
+    {
+      "id": "obliques",
+      "nameKey": "muscle.obliques",
+      "region": "core",
+      "side": "bilateral"
+    },
+    {
+      "id": "erector_spinae",
+      "nameKey": "muscle.erector_spinae",
+      "region": "back",
+      "side": "bilateral"
+    },
+    {
+      "id": "quadriceps",
+      "nameKey": "muscle.quadriceps",
+      "region": "thigh",
+      "side": "bilateral"
+    },
+    {
+      "id": "hamstrings",
+      "nameKey": "muscle.hamstrings",
+      "region": "thigh",
+      "side": "bilateral"
+    },
+    {
+      "id": "glutes",
+      "nameKey": "muscle.glutes",
+      "region": "hip",
+      "side": "bilateral"
+    },
+    {
+      "id": "glute_medius",
+      "nameKey": "muscle.glute_medius",
+      "region": "hip",
+      "side": "bilateral"
+    },
+    {
+      "id": "adductors",
+      "nameKey": "muscle.adductors",
+      "region": "thigh",
+      "side": "bilateral"
+    },
+    {
+      "id": "calves",
+      "nameKey": "muscle.calves",
+      "region": "lower_leg",
+      "side": "bilateral"
+    },
+    {
+      "id": "tibialis_anterior",
+      "nameKey": "muscle.tibialis_anterior",
+      "region": "lower_leg",
+      "side": "bilateral"
+    },
+    {
+      "id": "pectorals",
+      "nameKey": "muscle.pectorals",
+      "region": "chest",
+      "side": "bilateral"
+    },
+    {
+      "id": "deltoids",
+      "nameKey": "muscle.deltoids",
+      "region": "shoulder",
+      "side": "bilateral"
+    },
+    {
+      "id": "triceps",
+      "nameKey": "muscle.triceps",
+      "region": "arm",
+      "side": "bilateral"
+    },
+    {
+      "id": "serratus_anterior",
+      "nameKey": "muscle.serratus_anterior",
+      "region": "chest",
+      "side": "bilateral"
+    },
+    {
+      "id": "latissimus_dorsi",
+      "nameKey": "muscle.latissimus_dorsi",
+      "region": "back",
+      "side": "bilateral"
+    },
+    {
+      "id": "forearms",
+      "nameKey": "muscle.forearms",
+      "region": "forearm",
+      "side": "bilateral"
+    },
+    {
+      "id": "shoulder_stabilizers",
+      "nameKey": "muscle.shoulder_stabilizers",
+      "region": "shoulder",
+      "side": "bilateral"
+    },
+    {
+      "id": "hip_flexors",
+      "nameKey": "muscle.hip_flexors",
+      "region": "hip",
+      "side": "bilateral"
+    }
+  ]
+}

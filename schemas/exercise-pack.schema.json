@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Valens Exercise Pack Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "localizedKey": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_.-]+$"
+    },
+    "zeroToOne": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "required": [
+    "id",
+    "schemaVersion",
+    "version",
+    "nameKey",
+    "descriptionKey",
+    "author",
+    "license",
+    "contents"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "schemaVersion": {
+      "$ref": "#/$defs/schemaVersion"
+    },
+    "version": {
+      "type": "string"
+    },
+    "nameKey": {
+      "$ref": "#/$defs/localizedKey"
+    },
+    "descriptionKey": {
+      "$ref": "#/$defs/localizedKey"
+    },
+    "author": {
+      "type": "string"
+    },
+    "license": {
+      "type": "string"
+    },
+    "homepage": {
+      "type": "string"
+    },
+    "minAppVersion": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "contents": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "movementPatterns",
+        "muscles",
+        "joints",
+        "exercises",
+        "translations"
+      ],
+      "properties": {
+        "movementPatterns": {
+          "type": "string"
+        },
+        "muscles": {
+          "type": "string"
+        },
+        "joints": {
+          "type": "string"
+        },
+        "exercises": {
+          "type": "string"
+        },
+        "translations": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

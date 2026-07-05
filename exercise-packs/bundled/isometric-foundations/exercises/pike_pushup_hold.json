@@ -1,0 +1,132 @@
+{
+  "id": "pike_pushup_hold",
+  "schemaVersion": "0.1.0",
+  "nameKey": "exercise.pike_pushup_hold.name",
+  "descriptionKey": "exercise.pike_pushup_hold.description",
+  "type": "isometric",
+  "movementPatternId": "vertical_push",
+  "exerciseFamilyId": "pike_pushup_hold",
+  "difficulty": 4,
+  "equipment": [
+    "floor",
+    "mat"
+  ],
+  "homeFriendly": true,
+  "sides": "bilateral",
+  "defaultPrescription": {
+    "sets": 3,
+    "holdSeconds": 15,
+    "restSeconds": 60,
+    "intensityTarget": 7
+  },
+  "muscles": {
+    "primary": [
+      {
+        "id": "deltoids",
+        "load": 0.8
+      },
+      {
+        "id": "triceps",
+        "load": 0.5
+      }
+    ],
+    "secondary": [
+      {
+        "id": "serratus_anterior",
+        "load": 0.5
+      },
+      {
+        "id": "core",
+        "load": 0.4
+      }
+    ],
+    "stabilizers": [
+      {
+        "id": "shoulder_stabilizers",
+        "load": 0.7
+      }
+    ]
+  },
+  "jointStress": {
+    "left_shoulder": 0.7,
+    "right_shoulder": 0.7,
+    "left_wrist": 0.6,
+    "right_wrist": 0.6,
+    "neck": 0.3
+  },
+  "fatigueCost": {
+    "global": 7,
+    "local": {
+      "deltoids": 8,
+      "triceps": 5,
+      "core": 3
+    },
+    "joint": {
+      "left_shoulder": 7,
+      "right_shoulder": 7,
+      "left_wrist": 6,
+      "right_wrist": 6
+    }
+  },
+  "progression": [
+    {
+      "id": "pike_high_10s",
+      "labelKey": "progression.pike_high_10s",
+      "holdSeconds": 10,
+      "difficulty": 2
+    },
+    {
+      "id": "pike_high_20s",
+      "labelKey": "progression.pike_high_20s",
+      "holdSeconds": 20,
+      "difficulty": 3
+    },
+    {
+      "id": "pike_standard_15s",
+      "labelKey": "progression.pike_standard_15s",
+      "holdSeconds": 15,
+      "difficulty": 4
+    },
+    {
+      "id": "pike_standard_30s",
+      "labelKey": "progression.pike_standard_30s",
+      "holdSeconds": 30,
+      "difficulty": 5
+    }
+  ],
+  "regressions": [
+    "downward_dog_hold",
+    "wall_push"
+  ],
+  "alternatives": [
+    "wall_push"
+  ],
+  "contraindications": [
+    "acute_shoulder_pain",
+    "acute_wrist_pain",
+    "dizziness",
+    "requires_overhead_tolerance",
+    "requires_floor_access"
+  ],
+  "cues": {
+    "setup": [
+      "exercise.pike_pushup_hold.cue.setup.1",
+      "exercise.pike_pushup_hold.cue.setup.2"
+    ],
+    "during": [
+      "exercise.pike_pushup_hold.cue.during.1",
+      "exercise.pike_pushup_hold.cue.during.2"
+    ],
+    "stopIf": [
+      "exercise.pike_pushup_hold.cue.stop_if.1",
+      "exercise.pike_pushup_hold.cue.stop_if.2"
+    ]
+  },
+  "assets": {
+    "illustration": "assets/illustrations/pike_pushup_hold.svg",
+    "muscleMapFront": "assets/muscles/pike_pushup_hold_front.svg",
+    "muscleMapBack": "assets/muscles/pike_pushup_hold_back.svg",
+    "jointMapFront": "assets/joints/pike_pushup_hold_front.svg",
+    "jointMapBack": "assets/joints/pike_pushup_hold_back.svg"
+  }
+}

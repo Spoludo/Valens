@@ -1,0 +1,132 @@
+{
+  "id": "wall_sit",
+  "schemaVersion": "0.1.0",
+  "nameKey": "exercise.wall_sit.name",
+  "descriptionKey": "exercise.wall_sit.description",
+  "type": "isometric",
+  "movementPatternId": "squat",
+  "exerciseFamilyId": "wall_sit",
+  "difficulty": 2,
+  "equipment": [
+    "wall"
+  ],
+  "homeFriendly": true,
+  "sides": "bilateral",
+  "defaultPrescription": {
+    "sets": 3,
+    "holdSeconds": 30,
+    "restSeconds": 60,
+    "intensityTarget": 7
+  },
+  "muscles": {
+    "primary": [
+      {
+        "id": "quadriceps",
+        "load": 0.8
+      }
+    ],
+    "secondary": [
+      {
+        "id": "glutes",
+        "load": 0.5
+      },
+      {
+        "id": "hamstrings",
+        "load": 0.3
+      }
+    ],
+    "stabilizers": [
+      {
+        "id": "core",
+        "load": 0.3
+      }
+    ]
+  },
+  "jointStress": {
+    "left_knee": 0.6,
+    "right_knee": 0.6,
+    "left_hip": 0.3,
+    "right_hip": 0.3,
+    "lumbar_spine": 0.1
+  },
+  "fatigueCost": {
+    "global": 6,
+    "local": {
+      "quadriceps": 8,
+      "glutes": 5
+    },
+    "joint": {
+      "left_knee": 6,
+      "right_knee": 6
+    }
+  },
+  "progression": [
+    {
+      "id": "wall_sit_120deg_20s",
+      "labelKey": "progression.wall_sit_120deg_20s",
+      "holdSeconds": 20,
+      "difficulty": 1,
+      "kneeAngleDegrees": 120
+    },
+    {
+      "id": "wall_sit_110deg_30s",
+      "labelKey": "progression.wall_sit_110deg_30s",
+      "holdSeconds": 30,
+      "difficulty": 2,
+      "kneeAngleDegrees": 110
+    },
+    {
+      "id": "wall_sit_100deg_30s",
+      "labelKey": "progression.wall_sit_100deg_30s",
+      "holdSeconds": 30,
+      "difficulty": 3,
+      "kneeAngleDegrees": 100
+    },
+    {
+      "id": "wall_sit_90deg_30s",
+      "labelKey": "progression.wall_sit_90deg_30s",
+      "holdSeconds": 30,
+      "difficulty": 4,
+      "kneeAngleDegrees": 90
+    },
+    {
+      "id": "wall_sit_90deg_60s",
+      "labelKey": "progression.wall_sit_90deg_60s",
+      "holdSeconds": 60,
+      "difficulty": 5,
+      "kneeAngleDegrees": 90
+    }
+  ],
+  "regressions": [
+    "wall_sit_120deg",
+    "chair_sit_hold"
+  ],
+  "alternatives": [
+    "horse_stance",
+    "supported_split_squat_hold"
+  ],
+  "contraindications": [
+    "acute_knee_pain"
+  ],
+  "cues": {
+    "setup": [
+      "exercise.wall_sit.cue.setup.1",
+      "exercise.wall_sit.cue.setup.2"
+    ],
+    "during": [
+      "exercise.wall_sit.cue.during.1",
+      "exercise.wall_sit.cue.during.2"
+    ],
+    "stopIf": [
+      "exercise.wall_sit.cue.stop_if.1",
+      "exercise.wall_sit.cue.stop_if.2"
+    ]
+  },
+  "assets": {
+    "illustration": "assets/illustrations/wall_sit.svg",
+    "muscleMapFront": "assets/muscles/wall_sit_front.svg",
+    "muscleMapBack": "assets/muscles/wall_sit_back.svg",
+    "jointMapFront": "assets/joints/wall_sit_front.svg",
+    "jointMapBack": "assets/joints/wall_sit_back.svg"
+  }
+}

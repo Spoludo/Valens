@@ -1,0 +1,370 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Valens Exercise Definition",
+  "type": "object",
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "localizedKey": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_.-]+$"
+    },
+    "zeroToOne": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "muscleLoad": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "load"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "load": {
+          "$ref": "#/$defs/zeroToOne"
+        }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "schemaVersion",
+    "nameKey",
+    "descriptionKey",
+    "type",
+    "movementPatternId",
+    "exerciseFamilyId",
+    "difficulty",
+    "equipment",
+    "homeFriendly",
+    "defaultPrescription",
+    "muscles",
+    "jointStress",
+    "fatigueCost",
+    "progression",
+    "regressions",
+    "alternatives",
+    "contraindications",
+    "cues",
+    "assets"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "schemaVersion": {
+      "$ref": "#/$defs/schemaVersion"
+    },
+    "nameKey": {
+      "$ref": "#/$defs/localizedKey"
+    },
+    "descriptionKey": {
+      "$ref": "#/$defs/localizedKey"
+    },
+    "type": {
+      "enum": [
+        "isometric",
+        "dynamic",
+        "mobility_dynamic",
+        "mobility_isometric",
+        "balance",
+        "assessment",
+        "breathing"
+      ]
+    },
+    "movementPatternId": {
+      "$ref": "#/$defs/id"
+    },
+    "exerciseFamilyId": {
+      "$ref": "#/$defs/id"
+    },
+    "difficulty": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "equipment": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "none",
+          "wall",
+          "floor",
+          "chair",
+          "mat",
+          "bar",
+          "band",
+          "dumbbell",
+          "backpack",
+          "timer"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "homeFriendly": {
+      "type": "boolean"
+    },
+    "sides": {
+      "enum": [
+        "bilateral",
+        "left_right",
+        "single_side",
+        "midline"
+      ]
+    },
+    "defaultPrescription": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sets",
+        "restSeconds"
+      ],
+      "properties": {
+        "sets": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "holdSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "durationSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "restSeconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "targetReps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "intensityTarget": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "tempo": {
+          "type": "object"
+        }
+      }
+    },
+    "muscles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primary",
+        "secondary",
+        "stabilizers"
+      ],
+      "properties": {
+        "primary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/muscleLoad"
+          }
+        },
+        "secondary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/muscleLoad"
+          }
+        },
+        "stabilizers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/muscleLoad"
+          }
+        }
+      }
+    },
+    "jointStress": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/zeroToOne"
+      }
+    },
+    "fatigueCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "global",
+        "local",
+        "joint"
+      ],
+      "properties": {
+        "global": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "local": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10
+          }
+        },
+        "joint": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10
+          }
+        }
+      }
+    },
+    "progression": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "labelKey",
+          "difficulty"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "labelKey": {
+            "$ref": "#/$defs/localizedKey"
+          },
+          "difficulty": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "holdSeconds": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sets": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "restSeconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "kneeAngleDegrees": {
+            "type": "integer",
+            "minimum": 30,
+            "maximum": 180
+          },
+          "variationKey": {
+            "$ref": "#/$defs/localizedKey"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "regressions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "uniqueItems": true
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "uniqueItems": true
+    },
+    "contraindications": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "acute_knee_pain",
+          "acute_shoulder_pain",
+          "acute_wrist_pain",
+          "acute_low_back_pain",
+          "dizziness",
+          "uncontrolled_hypertension",
+          "requires_overhead_tolerance",
+          "requires_floor_access",
+          "requires_bar"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "cues": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "setup",
+        "during",
+        "stopIf"
+      ],
+      "properties": {
+        "setup": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/localizedKey"
+          }
+        },
+        "during": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/localizedKey"
+          }
+        },
+        "stopIf": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/localizedKey"
+          }
+        }
+      }
+    },
+    "assets": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "illustration": {
+          "type": "string"
+        },
+        "illustrationStart": {
+          "type": "string"
+        },
+        "illustrationHold": {
+          "type": "string"
+        },
+        "illustrationMistake": {
+          "type": "string"
+        },
+        "muscleMapFront": {
+          "type": "string"
+        },
+        "muscleMapBack": {
+          "type": "string"
+        },
+        "jointMapFront": {
+          "type": "string"
+        },
+        "jointMapBack": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

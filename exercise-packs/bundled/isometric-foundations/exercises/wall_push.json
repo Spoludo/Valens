@@ -1,0 +1,135 @@
+{
+  "id": "wall_push",
+  "schemaVersion": "0.1.0",
+  "nameKey": "exercise.wall_push.name",
+  "descriptionKey": "exercise.wall_push.description",
+  "type": "isometric",
+  "movementPatternId": "horizontal_push",
+  "exerciseFamilyId": "wall_push",
+  "difficulty": 1,
+  "equipment": [
+    "wall"
+  ],
+  "homeFriendly": true,
+  "sides": "bilateral",
+  "defaultPrescription": {
+    "sets": 6,
+    "holdSeconds": 10,
+    "restSeconds": 20,
+    "intensityTarget": 7
+  },
+  "muscles": {
+    "primary": [
+      {
+        "id": "pectorals",
+        "load": 0.7
+      },
+      {
+        "id": "triceps",
+        "load": 0.6
+      }
+    ],
+    "secondary": [
+      {
+        "id": "deltoids",
+        "load": 0.5
+      },
+      {
+        "id": "serratus_anterior",
+        "load": 0.5
+      }
+    ],
+    "stabilizers": [
+      {
+        "id": "core",
+        "load": 0.3
+      },
+      {
+        "id": "shoulder_stabilizers",
+        "load": 0.4
+      }
+    ]
+  },
+  "jointStress": {
+    "left_shoulder": 0.3,
+    "right_shoulder": 0.3,
+    "left_elbow": 0.2,
+    "right_elbow": 0.2,
+    "left_wrist": 0.2,
+    "right_wrist": 0.2
+  },
+  "fatigueCost": {
+    "global": 4,
+    "local": {
+      "pectorals": 6,
+      "triceps": 5,
+      "deltoids": 4
+    },
+    "joint": {
+      "left_shoulder": 3,
+      "right_shoulder": 3
+    }
+  },
+  "progression": [
+    {
+      "id": "wall_push_easy_6x8s",
+      "labelKey": "progression.wall_push_easy_6x8s",
+      "holdSeconds": 8,
+      "difficulty": 1,
+      "sets": 6
+    },
+    {
+      "id": "wall_push_standard_6x10s",
+      "labelKey": "progression.wall_push_standard_6x10s",
+      "holdSeconds": 10,
+      "difficulty": 2,
+      "sets": 6
+    },
+    {
+      "id": "wall_push_strong_6x12s",
+      "labelKey": "progression.wall_push_strong_6x12s",
+      "holdSeconds": 12,
+      "difficulty": 3,
+      "sets": 6
+    },
+    {
+      "id": "wall_push_strong_8x10s",
+      "labelKey": "progression.wall_push_strong_8x10s",
+      "holdSeconds": 10,
+      "difficulty": 4,
+      "sets": 8
+    }
+  ],
+  "regressions": [
+    "gentle_wall_push"
+  ],
+  "alternatives": [
+    "plank_hold",
+    "bear_crawl_hold"
+  ],
+  "contraindications": [
+    "acute_shoulder_pain",
+    "acute_wrist_pain"
+  ],
+  "cues": {
+    "setup": [
+      "exercise.wall_push.cue.setup.1",
+      "exercise.wall_push.cue.setup.2"
+    ],
+    "during": [
+      "exercise.wall_push.cue.during.1",
+      "exercise.wall_push.cue.during.2"
+    ],
+    "stopIf": [
+      "exercise.wall_push.cue.stop_if.1",
+      "exercise.wall_push.cue.stop_if.2"
+    ]
+  },
+  "assets": {
+    "illustration": "assets/illustrations/wall_push.svg",
+    "muscleMapFront": "assets/muscles/wall_push_front.svg",
+    "muscleMapBack": "assets/muscles/wall_push_back.svg",
+    "jointMapFront": "assets/joints/wall_push_front.svg",
+    "jointMapBack": "assets/joints/wall_push_back.svg"
+  }
+}

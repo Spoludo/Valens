@@ -1,0 +1,24 @@
+{
+  "id": "isometric-foundations",
+  "schemaVersion": "0.1.0",
+  "version": "0.1.0",
+  "nameKey": "pack.isometric_foundations.name",
+  "descriptionKey": "pack.isometric_foundations.description",
+  "author": "Valens Project",
+  "license": "MIT",
+  "homepage": "https://github.com/Spoludo/Valens",
+  "minAppVersion": "0.1.0",
+  "tags": [
+    "isometric",
+    "home",
+    "beginner",
+    "healthy-aging"
+  ],
+  "contents": {
+    "movementPatterns": "movement-patterns.json",
+    "muscles": "muscles.json",
+    "joints": "joints.json",
+    "exercises": "exercises/",
+    "translations": "translations/"
+  }
+}

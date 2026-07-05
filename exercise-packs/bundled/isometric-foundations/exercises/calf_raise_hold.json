@@ -1,0 +1,111 @@
+{
+  "id": "calf_raise_hold",
+  "schemaVersion": "0.1.0",
+  "nameKey": "exercise.calf_raise_hold.name",
+  "descriptionKey": "exercise.calf_raise_hold.description",
+  "type": "isometric",
+  "movementPatternId": "calf_raise",
+  "exerciseFamilyId": "calf_raise_hold",
+  "difficulty": 1,
+  "equipment": [
+    "wall"
+  ],
+  "homeFriendly": true,
+  "sides": "left_right",
+  "defaultPrescription": {
+    "sets": 3,
+    "holdSeconds": 30,
+    "restSeconds": 30,
+    "intensityTarget": 7
+  },
+  "muscles": {
+    "primary": [
+      {
+        "id": "calves",
+        "load": 0.8
+      }
+    ],
+    "secondary": [
+      {
+        "id": "tibialis_anterior",
+        "load": 0.2
+      }
+    ],
+    "stabilizers": [
+      {
+        "id": "core",
+        "load": 0.2
+      }
+    ]
+  },
+  "jointStress": {
+    "left_ankle": 0.4,
+    "right_ankle": 0.4,
+    "left_knee": 0.1,
+    "right_knee": 0.1
+  },
+  "fatigueCost": {
+    "global": 3,
+    "local": {
+      "calves": 7
+    },
+    "joint": {
+      "left_ankle": 4,
+      "right_ankle": 4
+    }
+  },
+  "progression": [
+    {
+      "id": "calf_two_leg_20s",
+      "labelKey": "progression.calf_two_leg_20s",
+      "holdSeconds": 20,
+      "difficulty": 1
+    },
+    {
+      "id": "calf_two_leg_45s",
+      "labelKey": "progression.calf_two_leg_45s",
+      "holdSeconds": 45,
+      "difficulty": 2
+    },
+    {
+      "id": "calf_two_leg_60s",
+      "labelKey": "progression.calf_two_leg_60s",
+      "holdSeconds": 60,
+      "difficulty": 3
+    },
+    {
+      "id": "calf_single_leg_20s",
+      "labelKey": "progression.calf_single_leg_20s",
+      "holdSeconds": 20,
+      "difficulty": 4
+    }
+  ],
+  "regressions": [
+    "supported_calf_raise_hold"
+  ],
+  "alternatives": [
+    "single_leg_balance_hold"
+  ],
+  "contraindications": [],
+  "cues": {
+    "setup": [
+      "exercise.calf_raise_hold.cue.setup.1",
+      "exercise.calf_raise_hold.cue.setup.2"
+    ],
+    "during": [
+      "exercise.calf_raise_hold.cue.during.1",
+      "exercise.calf_raise_hold.cue.during.2"
+    ],
+    "stopIf": [
+      "exercise.calf_raise_hold.cue.stop_if.1",
+      "exercise.calf_raise_hold.cue.stop_if.2"
+    ]
+  },
+  "assets": {
+    "illustration": "assets/illustrations/calf_raise_hold.svg",
+    "muscleMapFront": "assets/muscles/calf_raise_hold_front.svg",
+    "muscleMapBack": "assets/muscles/calf_raise_hold_back.svg",
+    "jointMapFront": "assets/joints/calf_raise_hold_front.svg",
+    "jointMapBack": "assets/joints/calf_raise_hold_back.svg"
+  }
+}

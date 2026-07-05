@@ -1,0 +1,123 @@
+{
+  "id": "hollow_body_hold",
+  "schemaVersion": "0.1.0",
+  "nameKey": "exercise.hollow_body_hold.name",
+  "descriptionKey": "exercise.hollow_body_hold.description",
+  "type": "isometric",
+  "movementPatternId": "anti_extension_core",
+  "exerciseFamilyId": "hollow_body",
+  "difficulty": 2,
+  "equipment": [
+    "floor",
+    "mat"
+  ],
+  "homeFriendly": true,
+  "sides": "midline",
+  "defaultPrescription": {
+    "sets": 3,
+    "holdSeconds": 20,
+    "restSeconds": 40,
+    "intensityTarget": 7
+  },
+  "muscles": {
+    "primary": [
+      {
+        "id": "transverse_abdominis",
+        "load": 0.9
+      },
+      {
+        "id": "rectus_abdominis",
+        "load": 0.8
+      }
+    ],
+    "secondary": [
+      {
+        "id": "hip_flexors",
+        "load": 0.5
+      },
+      {
+        "id": "obliques",
+        "load": 0.5
+      }
+    ],
+    "stabilizers": [
+      {
+        "id": "core",
+        "load": 0.8
+      }
+    ]
+  },
+  "jointStress": {
+    "lumbar_spine": 0.3,
+    "left_hip": 0.2,
+    "right_hip": 0.2
+  },
+  "fatigueCost": {
+    "global": 5,
+    "local": {
+      "core": 8,
+      "hip_flexors": 4
+    },
+    "joint": {
+      "lumbar_spine": 3
+    }
+  },
+  "progression": [
+    {
+      "id": "hollow_tucked_15s",
+      "labelKey": "progression.hollow_tucked_15s",
+      "holdSeconds": 15,
+      "difficulty": 1
+    },
+    {
+      "id": "hollow_tucked_25s",
+      "labelKey": "progression.hollow_tucked_25s",
+      "holdSeconds": 25,
+      "difficulty": 2
+    },
+    {
+      "id": "hollow_one_leg_30s",
+      "labelKey": "progression.hollow_one_leg_30s",
+      "holdSeconds": 30,
+      "difficulty": 3
+    },
+    {
+      "id": "hollow_standard_45s",
+      "labelKey": "progression.hollow_standard_45s",
+      "holdSeconds": 45,
+      "difficulty": 4
+    }
+  ],
+  "regressions": [
+    "dead_bug_hold",
+    "tucked_hollow_hold"
+  ],
+  "alternatives": [
+    "plank_hold"
+  ],
+  "contraindications": [
+    "acute_low_back_pain",
+    "requires_floor_access"
+  ],
+  "cues": {
+    "setup": [
+      "exercise.hollow_body_hold.cue.setup.1",
+      "exercise.hollow_body_hold.cue.setup.2"
+    ],
+    "during": [
+      "exercise.hollow_body_hold.cue.during.1",
+      "exercise.hollow_body_hold.cue.during.2"
+    ],
+    "stopIf": [
+      "exercise.hollow_body_hold.cue.stop_if.1",
+      "exercise.hollow_body_hold.cue.stop_if.2"
+    ]
+  },
+  "assets": {
+    "illustration": "assets/illustrations/hollow_body_hold.svg",
+    "muscleMapFront": "assets/muscles/hollow_body_hold_front.svg",
+    "muscleMapBack": "assets/muscles/hollow_body_hold_back.svg",
+    "jointMapFront": "assets/joints/hollow_body_hold_front.svg",
+    "jointMapBack": "assets/joints/hollow_body_hold_back.svg"
+  }
+}
