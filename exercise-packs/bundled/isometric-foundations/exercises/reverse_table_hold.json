@@ -1,6 +1,6 @@
 {
   "id": "reverse_table_hold",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.reverse_table_hold.name",
   "descriptionKey": "exercise.reverse_table_hold.description",
   "type": "isometric",
@@ -12,7 +12,7 @@
     "mat"
   ],
   "homeFriendly": true,
-  "sides": "bilateral",
+  "sideModel": "bilateral",
   "defaultPrescription": {
     "sets": 3,
     "holdSeconds": 20,
@@ -52,13 +52,18 @@
     ]
   },
   "jointStress": {
-    "left_shoulder": 0.4,
-    "right_shoulder": 0.4,
-    "left_wrist": 0.4,
-    "right_wrist": 0.4,
-    "lumbar_spine": 0.2,
-    "left_hip": 0.3,
-    "right_hip": 0.3
+    "shoulder": {
+      "bilateral": 0.4
+    },
+    "wrist": {
+      "bilateral": 0.4
+    },
+    "lumbar_spine": {
+      "midline": 0.2
+    },
+    "hip": {
+      "bilateral": 0.3
+    }
   },
   "fatigueCost": {
     "global": 5,
@@ -68,36 +73,42 @@
       "deltoids": 3
     },
     "joint": {
-      "left_wrist": 4,
-      "right_wrist": 4,
-      "left_shoulder": 4,
-      "right_shoulder": 4
+      "wrist": {
+        "bilateral": 4
+      },
+      "shoulder": {
+        "bilateral": 4
+      }
     }
   },
   "progression": [
     {
-      "id": "reverse_low_15s",
-      "labelKey": "progression.reverse_low_15s",
+      "id": "low_bridge_15s",
+      "labelKey": "progression.reverse_table_hold.low_bridge_15s",
       "holdSeconds": 15,
-      "difficulty": 1
+      "difficulty": 1,
+      "variationKey": "variation.low_bridge"
     },
     {
-      "id": "reverse_bent_knee_20s",
-      "labelKey": "progression.reverse_bent_knee_20s",
+      "id": "bent_knee_20s",
+      "labelKey": "progression.reverse_table_hold.bent_knee_20s",
       "holdSeconds": 20,
-      "difficulty": 2
+      "difficulty": 2,
+      "variationKey": "variation.bent_knee"
     },
     {
-      "id": "reverse_bent_knee_30s",
-      "labelKey": "progression.reverse_bent_knee_30s",
+      "id": "bent_knee_30s",
+      "labelKey": "progression.reverse_table_hold.bent_knee_30s",
       "holdSeconds": 30,
-      "difficulty": 3
+      "difficulty": 3,
+      "variationKey": "variation.bent_knee"
     },
     {
-      "id": "reverse_standard_45s",
-      "labelKey": "progression.reverse_standard_45s",
+      "id": "standard_45s",
+      "labelKey": "progression.reverse_table_hold.standard_45s",
       "holdSeconds": 45,
-      "difficulty": 4
+      "difficulty": 4,
+      "variationKey": "variation.standard"
     }
   ],
   "regressions": [

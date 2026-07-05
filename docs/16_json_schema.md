@@ -1,8 +1,8 @@
 # 16 – JSON Schema
 
-**Project:** Valens
-**Version:** 0.3
-**Status:** Implemented specification
+**Project:** Valens  
+**Version:** 0.4  
+**Status:** Implemented specification  
 **Last updated:** 2026-07-06
 
 ---
@@ -27,11 +27,11 @@ exercise-packs/bundled/isometric-foundations/
 
 The JSON schema layer is the contract between:
 
-* exercise-pack authors
-* the Exercise Library Engine
-* the Planner Engine
-* the UI
-* tests
+- exercise-pack authors
+- the Exercise Library Engine
+- the Planner Engine
+- the UI
+- tests
 
 The app must not infer required fields from examples alone.
 
@@ -99,40 +99,16 @@ Each exercise pack has a `pack.json` manifest.
 
 It defines:
 
-* pack id
-* schema version
-* pack version
-* localization keys
-* author
-* license
-* homepage
-* minimum app version
-* tags
-* content paths
-
-Example:
-
-```json
-{
-  "id": "isometric-foundations",
-  "schemaVersion": "0.1.0",
-  "version": "0.1.0",
-  "nameKey": "pack.isometric_foundations.name",
-  "descriptionKey": "pack.isometric_foundations.description",
-  "author": "Valens Project",
-  "license": "MIT",
-  "homepage": "https://github.com/Spoludo/Valens",
-  "minAppVersion": "0.1.0",
-  "tags": ["isometric", "home", "beginner", "healthy-aging"],
-  "contents": {
-    "movementPatterns": "movement-patterns.json",
-    "muscles": "muscles.json",
-    "joints": "joints.json",
-    "exercises": "exercises/",
-    "translations": "translations/"
-  }
-}
-```
+- pack id
+- schema version
+- pack version
+- localization keys
+- author
+- license
+- homepage
+- minimum app version
+- tags
+- content paths
 
 The manifest is validated by:
 
@@ -150,70 +126,128 @@ They are not exercises.
 
 Example movement patterns:
 
-* `anti_extension_core`
-* `squat`
-* `hip_extension`
-* `horizontal_push`
-* `vertical_push`
-* `quadruped_stability`
-* `calf_raise`
-* `single_leg_balance`
+- `anti_extension_core`
+- `squat`
+- `hip_extension`
+- `horizontal_push`
+- `vertical_push`
+- `quadruped_stability`
+- `calf_raise`
+- `single_leg_balance`
 
 The planner should first reason about movement needs, then select exercises that satisfy those patterns.
 
-Movement patterns are validated by:
-
-```text
-schemas/movement-pattern.schema.json
-schemas/movement-patterns.schema.json
-```
-
 ---
 
-## 6. Muscles and joints
+## 6. Muscles and anatomical joints
 
 Muscles and joints are reference data.
 
 They support:
 
-* fatigue estimation
-* joint-load estimation
-* pain matching
-* body maps
-* progress visualization
-* planner constraints
+- fatigue estimation
+- joint-load estimation
+- pain matching
+- body maps
+- progress visualization
+- planner constraints
 
-Current joint identifiers are explicit and side-aware where needed.
-
-Examples:
+Current anatomical joint identifiers:
 
 ```text
-left_knee
-right_knee
-left_shoulder
-right_shoulder
-left_wrist
-right_wrist
-lumbar_spine
 neck
+shoulder
+elbow
+wrist
+lumbar_spine
+hip
+knee
+ankle
 ```
 
-This is intentionally simple for the first schema version.
+Each joint defines supported sides.
 
-The pain model can match reported pain against these explicit joint ids without requiring a more abstract side-role mapping layer.
+Example:
 
-Reference data is validated by:
+```json
+{
+  "id": "knee",
+  "nameKey": "joint.knee",
+  "region": "knee",
+  "sides": ["left", "right"]
+}
+```
 
-```text
-schemas/muscle.schema.json
-schemas/muscles.schema.json
-schemas/joint.schema.json
-schemas/joints.schema.json
+Midline example:
+
+```json
+{
+  "id": "lumbar_spine",
+  "nameKey": "joint.lumbar_spine",
+  "region": "spine",
+  "sides": ["midline"]
+}
 ```
 
 ---
 
-## 7. Exercise definitions
+## 7. Side-aware joint load maps
+
+Exercise definitions use anatomical joints plus side roles.
+
+They should not usually encode absolute left/right joint ids.
+
+Example, bilateral:
+
+```json
+{
+  "jointStress": {
+    "knee": {
+      "bilateral": 0.6
+    },
+    "hip": {
+      "bilateral": 0.3
+    },
+    "lumbar_spine": {
+      "midline": 0.1
+    }
+  }
+}
+```
+
+Example, unilateral:
+
+```json
+{
+  "sideModel": "left_right",
+  "jointStress": {
+    "hip": {
+      "workingSide": 0.4
+    },
+    "knee": {
+      "workingSide": 0.2
+    }
+  }
+}
+```
+
+Supported side roles:
+
+```text
+bilateral
+midline
+workingSide
+supportSide
+oppositeSide
+left
+right
+```
+
+Use `left` and `right` only for exercises that are genuinely asymmetric by design.
+
+---
+
+## 8. Exercise definitions
 
 Each exercise is a metadata file under:
 
@@ -223,27 +257,27 @@ exercise-packs/bundled/isometric-foundations/exercises/
 
 Each exercise must define:
 
-* `id`
-* `schemaVersion`
-* `nameKey`
-* `descriptionKey`
-* `type`
-* `movementPatternId`
-* `exerciseFamilyId`
-* `difficulty`
-* `equipment`
-* `homeFriendly`
-* `sides`
-* `defaultPrescription`
-* `muscles`
-* `jointStress`
-* `fatigueCost`
-* `progression`
-* `regressions`
-* `alternatives`
-* `contraindications`
-* `cues`
-* `assets`
+- `id`
+- `schemaVersion`
+- `nameKey`
+- `descriptionKey`
+- `type`
+- `movementPatternId`
+- `exerciseFamilyId`
+- `difficulty`
+- `equipment`
+- `homeFriendly`
+- `sideModel`
+- `defaultPrescription`
+- `muscles`
+- `jointStress`
+- `fatigueCost`
+- `progression`
+- `regressions`
+- `alternatives`
+- `contraindications`
+- `cues`
+- `assets`
 
 The planner must reason from these fields.
 
@@ -251,14 +285,14 @@ The planner must not special-case exercise names.
 
 ---
 
-## 8. Exercise definition example
+## 9. Exercise definition example
 
 Example, shortened:
 
 ```json
 {
   "id": "wall_sit",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.wall_sit.name",
   "descriptionKey": "exercise.wall_sit.description",
   "type": "isometric",
@@ -267,31 +301,23 @@ Example, shortened:
   "difficulty": 2,
   "equipment": ["wall"],
   "homeFriendly": true,
-  "sides": "bilateral",
+  "sideModel": "bilateral",
   "defaultPrescription": {
     "sets": 3,
     "holdSeconds": 30,
     "restSeconds": 60,
     "intensityTarget": 7
   },
-  "muscles": {
-    "primary": [
-      { "id": "quadriceps", "load": 0.8 }
-    ],
-    "secondary": [
-      { "id": "glutes", "load": 0.5 },
-      { "id": "hamstrings", "load": 0.3 }
-    ],
-    "stabilizers": [
-      { "id": "core", "load": 0.3 }
-    ]
-  },
   "jointStress": {
-    "left_knee": 0.6,
-    "right_knee": 0.6,
-    "left_hip": 0.3,
-    "right_hip": 0.3,
-    "lumbar_spine": 0.1
+    "knee": {
+      "bilateral": 0.6
+    },
+    "hip": {
+      "bilateral": 0.3
+    },
+    "lumbar_spine": {
+      "midline": 0.1
+    }
   },
   "fatigueCost": {
     "global": 6,
@@ -300,67 +326,31 @@ Example, shortened:
       "glutes": 5
     },
     "joint": {
-      "left_knee": 6,
-      "right_knee": 6
+      "knee": {
+        "bilateral": 6
+      }
     }
-  },
-  "progression": [
-    {
-      "id": "wall_sit_120deg_20s",
-      "labelKey": "progression.wall_sit.120deg_20s",
-      "holdSeconds": 20,
-      "kneeAngleDegrees": 120,
-      "difficulty": 1
-    }
-  ],
-  "regressions": [
-    "wall_sit_120deg",
-    "chair_sit_hold"
-  ],
-  "alternatives": [
-    "horse_stance",
-    "supported_split_squat_hold"
-  ],
-  "contraindications": [
-    "acute_knee_pain"
-  ],
-  "cues": {
-    "setup": [
-      "exercise.wall_sit.cue.setup.1"
-    ],
-    "during": [
-      "exercise.wall_sit.cue.during.1"
-    ],
-    "stopIf": [
-      "exercise.wall_sit.cue.stop_if.1"
-    ]
-  },
-  "assets": {
-    "illustration": "assets/illustrations/wall_sit.svg",
-    "muscleMapFront": "assets/muscles/wall_sit_front.svg",
-    "muscleMapBack": "assets/muscles/wall_sit_back.svg",
-    "jointMapFront": "assets/joints/wall_sit_front.svg",
-    "jointMapBack": "assets/joints/wall_sit_back.svg"
   }
 }
 ```
 
 ---
 
-## 9. Validation
+## 10. Validation
 
 Exercise-pack loading must validate:
 
-* JSON syntax
-* schema version
-* required fields
-* movement pattern references
-* muscle references
-* joint references
-* progression structure
-* regression and alternative references where practical
-* translation keys where practical
-* asset references where practical
+- JSON syntax
+- schema version
+- required fields
+- movement pattern references
+- muscle references
+- anatomical joint references
+- side-role keys
+- progression structure
+- regression and alternative references where practical
+- translation keys where practical
+- asset references where practical
 
 Invalid exercise definitions must not crash the app.
 
@@ -370,7 +360,7 @@ Invalid imported or community packs should be disabled with a clear error.
 
 ---
 
-## 10. Local validation script
+## 11. Local validation script
 
 The repository includes:
 
@@ -396,21 +386,21 @@ It does not replace full JSON Schema validation in the Android app.
 
 ---
 
-## 11. Versioning
+## 12. Versioning
 
-All packs and schemas use semantic versioning.
+The structured side-aware joint-load model starts at schema version `0.2.0`.
 
 Breaking schema changes require one of:
 
-* migration logic
-* compatibility adapters
-* explicit rejection of older pack versions with a clear error
+- migration logic
+- compatibility adapters
+- explicit rejection of older pack versions with a clear error
 
-The MVP may support only schema version `0.1.0`, but this limitation must be explicit in code.
+The MVP may support only schema version `0.2.0`, but this limitation must be explicit in code.
 
 ---
 
-## 12. Localization
+## 13. Localization
 
 Display strings should use localization keys, not hardcoded text.
 
@@ -432,20 +422,18 @@ The first bundled pack includes:
 translations/en.json
 ```
 
-The UI should resolve localization keys through the Exercise Library Engine or a dedicated localization adapter.
-
 ---
 
-## 13. Assets
+## 14. Assets
 
 Exercise definitions may reference:
 
-* exercise illustrations
-* muscle maps
-* joint maps
-* mistake illustrations
-* audio cues
-* future videos
+- exercise illustrations
+- muscle maps
+- joint maps
+- mistake illustrations
+- audio cues
+- future videos
 
 Missing assets should not crash the app.
 
@@ -453,23 +441,24 @@ The MVP may show placeholders.
 
 ---
 
-## 14. Acceptance criteria
+## 15. Acceptance criteria
 
 For the MVP:
 
-* bundled packs load from `exercise-packs/bundled/`
-* schema files are present under `schemas/`
-* exercises validate required fields
-* movement pattern references validate
-* muscle references validate
-* joint references validate
-* invalid bundled definitions fail tests
-* invalid runtime/imported definitions fail gracefully
-* the planner receives typed exercise metadata, not raw JSON
+- bundled packs load from `exercise-packs/bundled/`
+- schema files are present under `schemas/`
+- exercises validate required fields
+- movement pattern references validate
+- muscle references validate
+- anatomical joint references validate
+- side-role keys validate
+- invalid bundled definitions fail tests
+- invalid runtime/imported definitions fail gracefully
+- the planner receives typed exercise metadata, not raw JSON
 
 ---
 
-## 15. Summary
+## 16. Summary
 
 The JSON schema layer is now part of the Valens architecture.
 

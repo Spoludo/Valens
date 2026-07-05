@@ -1,6 +1,6 @@
 {
   "id": "wall_sit",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.wall_sit.name",
   "descriptionKey": "exercise.wall_sit.description",
   "type": "isometric",
@@ -11,7 +11,7 @@
     "wall"
   ],
   "homeFriendly": true,
-  "sides": "bilateral",
+  "sideModel": "bilateral",
   "defaultPrescription": {
     "sets": 3,
     "holdSeconds": 30,
@@ -43,11 +43,15 @@
     ]
   },
   "jointStress": {
-    "left_knee": 0.6,
-    "right_knee": 0.6,
-    "left_hip": 0.3,
-    "right_hip": 0.3,
-    "lumbar_spine": 0.1
+    "knee": {
+      "bilateral": 0.6
+    },
+    "hip": {
+      "bilateral": 0.3
+    },
+    "lumbar_spine": {
+      "midline": 0.1
+    }
   },
   "fatigueCost": {
     "global": 6,
@@ -56,8 +60,9 @@
       "glutes": 5
     },
     "joint": {
-      "left_knee": 6,
-      "right_knee": 6
+      "knee": {
+        "bilateral": 6
+      }
     }
   },
   "progression": [

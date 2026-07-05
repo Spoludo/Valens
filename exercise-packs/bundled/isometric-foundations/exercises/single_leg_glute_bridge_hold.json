@@ -1,6 +1,6 @@
 {
   "id": "single_leg_glute_bridge_hold",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.single_leg_glute_bridge_hold.name",
   "descriptionKey": "exercise.single_leg_glute_bridge_hold.description",
   "type": "isometric",
@@ -12,7 +12,7 @@
     "mat"
   ],
   "homeFriendly": true,
-  "sides": "left_right",
+  "sideModel": "left_right",
   "defaultPrescription": {
     "sets": 3,
     "holdSeconds": 20,
@@ -48,11 +48,15 @@
     ]
   },
   "jointStress": {
-    "left_hip": 0.4,
-    "right_hip": 0.4,
-    "lumbar_spine": 0.2,
-    "left_knee": 0.2,
-    "right_knee": 0.2
+    "hip": {
+      "workingSide": 0.4
+    },
+    "knee": {
+      "workingSide": 0.2
+    },
+    "lumbar_spine": {
+      "midline": 0.2
+    }
   },
   "fatigueCost": {
     "global": 5,
@@ -62,34 +66,42 @@
       "core": 3
     },
     "joint": {
-      "left_hip": 4,
-      "right_hip": 4
+      "hip": {
+        "workingSide": 4
+      },
+      "knee": {
+        "workingSide": 2
+      }
     }
   },
   "progression": [
     {
-      "id": "bridge_two_leg_20s",
-      "labelKey": "progression.bridge_two_leg_20s",
+      "id": "two_leg_20s",
+      "labelKey": "progression.single_leg_glute_bridge_hold.two_leg_20s",
       "holdSeconds": 20,
-      "difficulty": 1
+      "difficulty": 1,
+      "variationKey": "variation.two_leg"
     },
     {
-      "id": "bridge_single_leg_15s",
-      "labelKey": "progression.bridge_single_leg_15s",
+      "id": "single_leg_15s",
+      "labelKey": "progression.single_leg_glute_bridge_hold.single_leg_15s",
       "holdSeconds": 15,
-      "difficulty": 2
+      "difficulty": 2,
+      "variationKey": "variation.single_leg"
     },
     {
-      "id": "bridge_single_leg_25s",
-      "labelKey": "progression.bridge_single_leg_25s",
+      "id": "single_leg_25s",
+      "labelKey": "progression.single_leg_glute_bridge_hold.single_leg_25s",
       "holdSeconds": 25,
-      "difficulty": 3
+      "difficulty": 3,
+      "variationKey": "variation.single_leg"
     },
     {
-      "id": "bridge_single_leg_45s",
-      "labelKey": "progression.bridge_single_leg_45s",
+      "id": "single_leg_45s",
+      "labelKey": "progression.single_leg_glute_bridge_hold.single_leg_45s",
       "holdSeconds": 45,
-      "difficulty": 4
+      "difficulty": 4,
+      "variationKey": "variation.single_leg"
     }
   ],
   "regressions": [

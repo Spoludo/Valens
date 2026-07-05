@@ -1,6 +1,6 @@
 {
   "id": "plank_hold",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.plank_hold.name",
   "descriptionKey": "exercise.plank_hold.description",
   "type": "isometric",
@@ -12,7 +12,7 @@
     "mat"
   ],
   "homeFriendly": true,
-  "sides": "midline",
+  "sideModel": "bilateral",
   "defaultPrescription": {
     "sets": 3,
     "holdSeconds": 30,
@@ -52,11 +52,15 @@
     ]
   },
   "jointStress": {
-    "lumbar_spine": 0.3,
-    "left_shoulder": 0.3,
-    "right_shoulder": 0.3,
-    "left_wrist": 0.1,
-    "right_wrist": 0.1
+    "lumbar_spine": {
+      "midline": 0.3
+    },
+    "shoulder": {
+      "bilateral": 0.3
+    },
+    "wrist": {
+      "bilateral": 0.1
+    }
   },
   "fatigueCost": {
     "global": 5,
@@ -65,35 +69,42 @@
       "deltoids": 3
     },
     "joint": {
-      "lumbar_spine": 3,
-      "left_shoulder": 3,
-      "right_shoulder": 3
+      "lumbar_spine": {
+        "midline": 3
+      },
+      "shoulder": {
+        "bilateral": 3
+      }
     }
   },
   "progression": [
     {
-      "id": "plank_knees_20s",
-      "labelKey": "progression.plank_knees_20s",
+      "id": "knees_20s",
+      "labelKey": "progression.plank_hold.knees_20s",
       "holdSeconds": 20,
-      "difficulty": 1
+      "difficulty": 1,
+      "variationKey": "variation.knees"
     },
     {
-      "id": "plank_forearm_30s",
-      "labelKey": "progression.plank_forearm_30s",
+      "id": "forearm_30s",
+      "labelKey": "progression.plank_hold.forearm_30s",
       "holdSeconds": 30,
-      "difficulty": 2
+      "difficulty": 2,
+      "variationKey": "variation.forearm"
     },
     {
-      "id": "plank_forearm_45s",
-      "labelKey": "progression.plank_forearm_45s",
+      "id": "forearm_45s",
+      "labelKey": "progression.plank_hold.forearm_45s",
       "holdSeconds": 45,
-      "difficulty": 3
+      "difficulty": 3,
+      "variationKey": "variation.forearm"
     },
     {
-      "id": "plank_forearm_60s",
-      "labelKey": "progression.plank_forearm_60s",
+      "id": "forearm_60s",
+      "labelKey": "progression.plank_hold.forearm_60s",
       "holdSeconds": 60,
-      "difficulty": 4
+      "difficulty": 4,
+      "variationKey": "variation.forearm"
     }
   ],
   "regressions": [

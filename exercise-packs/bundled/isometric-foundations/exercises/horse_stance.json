@@ -1,6 +1,6 @@
 {
   "id": "horse_stance",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.horse_stance.name",
   "descriptionKey": "exercise.horse_stance.description",
   "type": "isometric",
@@ -11,7 +11,7 @@
     "none"
   ],
   "homeFriendly": true,
-  "sides": "bilateral",
+  "sideModel": "bilateral",
   "defaultPrescription": {
     "sets": 3,
     "holdSeconds": 20,
@@ -47,12 +47,15 @@
     ]
   },
   "jointStress": {
-    "left_knee": 0.7,
-    "right_knee": 0.7,
-    "left_hip": 0.6,
-    "right_hip": 0.6,
-    "left_ankle": 0.3,
-    "right_ankle": 0.3
+    "knee": {
+      "bilateral": 0.7
+    },
+    "hip": {
+      "bilateral": 0.6
+    },
+    "ankle": {
+      "bilateral": 0.3
+    }
   },
   "fatigueCost": {
     "global": 7,
@@ -62,42 +65,49 @@
       "adductors": 6
     },
     "joint": {
-      "left_knee": 7,
-      "right_knee": 7,
-      "left_hip": 5,
-      "right_hip": 5
+      "knee": {
+        "bilateral": 7
+      },
+      "hip": {
+        "bilateral": 5
+      }
     }
   },
   "progression": [
     {
-      "id": "horse_high_15s",
-      "labelKey": "progression.horse_high_15s",
+      "id": "high_stance_15s",
+      "labelKey": "progression.horse_stance.high_15s",
       "holdSeconds": 15,
-      "difficulty": 1
+      "difficulty": 1,
+      "variationKey": "variation.high_stance"
     },
     {
-      "id": "horse_high_25s",
-      "labelKey": "progression.horse_high_25s",
+      "id": "high_stance_25s",
+      "labelKey": "progression.horse_stance.high_25s",
       "holdSeconds": 25,
-      "difficulty": 2
+      "difficulty": 2,
+      "variationKey": "variation.high_stance"
     },
     {
-      "id": "horse_standard_30s",
-      "labelKey": "progression.horse_standard_30s",
+      "id": "standard_30s",
+      "labelKey": "progression.horse_stance.standard_30s",
       "holdSeconds": 30,
-      "difficulty": 3
+      "difficulty": 3,
+      "variationKey": "variation.standard"
     },
     {
-      "id": "horse_standard_45s",
-      "labelKey": "progression.horse_standard_45s",
+      "id": "standard_45s",
+      "labelKey": "progression.horse_stance.standard_45s",
       "holdSeconds": 45,
-      "difficulty": 4
+      "difficulty": 4,
+      "variationKey": "variation.standard"
     },
     {
-      "id": "horse_standard_60s",
-      "labelKey": "progression.horse_standard_60s",
+      "id": "standard_60s",
+      "labelKey": "progression.horse_stance.standard_60s",
       "holdSeconds": 60,
-      "difficulty": 5
+      "difficulty": 5,
+      "variationKey": "variation.standard"
     }
   ],
   "regressions": [

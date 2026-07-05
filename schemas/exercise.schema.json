@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spoludo.github.io/valens/schemas/exercise.schema.json",
   "title": "Valens Exercise Definition",
   "type": "object",
   "additionalProperties": false,
@@ -20,6 +21,79 @@
       "type": "number",
       "minimum": 0,
       "maximum": 1
+    },
+    "zeroToTenInteger": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "equipmentItem": {
+      "type": "string",
+      "enum": [
+        "none",
+        "wall",
+        "floor",
+        "chair",
+        "mat",
+        "bar",
+        "band",
+        "dumbbell",
+        "backpack",
+        "timer"
+      ]
+    },
+    "exerciseType": {
+      "type": "string",
+      "enum": [
+        "isometric",
+        "dynamic",
+        "mobility_dynamic",
+        "mobility_isometric",
+        "balance",
+        "assessment",
+        "breathing"
+      ]
+    },
+    "sideModel": {
+      "type": "string",
+      "enum": [
+        "bilateral",
+        "left_right",
+        "single_side",
+        "midline"
+      ]
+    },
+    "jointLoadRole": {
+      "type": "string",
+      "enum": [
+        "bilateral",
+        "midline",
+        "workingSide",
+        "supportSide",
+        "oppositeSide",
+        "left",
+        "right"
+      ]
+    },
+    "jointStressByRole": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/zeroToOne"
+      },
+      "propertyNames": {
+        "$ref": "#/$defs/jointLoadRole"
+      }
+    },
+    "jointFatigueByRole": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/zeroToTenInteger"
+      },
+      "propertyNames": {
+        "$ref": "#/$defs/jointLoadRole"
+      }
     },
     "muscleLoad": {
       "type": "object",
@@ -49,6 +123,7 @@
     "difficulty",
     "equipment",
     "homeFriendly",
+    "sideModel",
     "defaultPrescription",
     "muscles",
     "jointStress",
@@ -74,15 +149,7 @@
       "$ref": "#/$defs/localizedKey"
     },
     "type": {
-      "enum": [
-        "isometric",
-        "dynamic",
-        "mobility_dynamic",
-        "mobility_isometric",
-        "balance",
-        "assessment",
-        "breathing"
-      ]
+      "$ref": "#/$defs/exerciseType"
     },
     "movementPatternId": {
       "$ref": "#/$defs/id"
@@ -98,18 +165,7 @@
     "equipment": {
       "type": "array",
       "items": {
-        "enum": [
-          "none",
-          "wall",
-          "floor",
-          "chair",
-          "mat",
-          "bar",
-          "band",
-          "dumbbell",
-          "backpack",
-          "timer"
-        ]
+        "$ref": "#/$defs/equipmentItem"
       },
       "minItems": 1,
       "uniqueItems": true
@@ -117,13 +173,8 @@
     "homeFriendly": {
       "type": "boolean"
     },
-    "sides": {
-      "enum": [
-        "bilateral",
-        "left_right",
-        "single_side",
-        "midline"
-      ]
+    "sideModel": {
+      "$ref": "#/$defs/sideModel"
     },
     "defaultPrescription": {
       "type": "object",
@@ -135,23 +186,28 @@
       "properties": {
         "sets": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "maximum": 10
         },
         "holdSeconds": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "maximum": 600
         },
         "durationSeconds": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "maximum": 600
         },
         "restSeconds": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 300
         },
         "targetReps": {
           "type": "integer",
-          "minimum": 1
+          "minimum": 1,
+          "maximum": 100
         },
         "intensityTarget": {
           "type": "integer",
@@ -159,7 +215,25 @@
           "maximum": 10
         },
         "tempo": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "eccentricSeconds": {
+              "type": "number",
+              "minimum": 0
+            },
+            "bottomPauseSeconds": {
+              "type": "number",
+              "minimum": 0
+            },
+            "concentricCue": {
+              "type": "string"
+            },
+            "topPauseSeconds": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
         }
       }
     },
@@ -194,8 +268,9 @@
     },
     "jointStress": {
       "type": "object",
+      "description": "Map anatomical joint id to relative stress by side role.",
       "additionalProperties": {
-        "$ref": "#/$defs/zeroToOne"
+        "$ref": "#/$defs/jointStressByRole"
       }
     },
     "fatigueCost": {
@@ -208,24 +283,19 @@
       ],
       "properties": {
         "global": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 10
+          "$ref": "#/$defs/zeroToTenInteger"
         },
         "local": {
           "type": "object",
           "additionalProperties": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 10
+            "$ref": "#/$defs/zeroToTenInteger"
           }
         },
         "joint": {
           "type": "object",
+          "description": "Map anatomical joint id to fatigue cost by side role.",
           "additionalProperties": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 10
+            "$ref": "#/$defs/jointFatigueByRole"
           }
         }
       }
@@ -293,6 +363,7 @@
     "contraindications": {
       "type": "array",
       "items": {
+        "type": "string",
         "enum": [
           "acute_knee_pain",
           "acute_shoulder_pain",

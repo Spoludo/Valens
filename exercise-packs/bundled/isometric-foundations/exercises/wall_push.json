@@ -1,6 +1,6 @@
 {
   "id": "wall_push",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.wall_push.name",
   "descriptionKey": "exercise.wall_push.description",
   "type": "isometric",
@@ -11,12 +11,12 @@
     "wall"
   ],
   "homeFriendly": true,
-  "sides": "bilateral",
+  "sideModel": "bilateral",
   "defaultPrescription": {
     "sets": 6,
     "holdSeconds": 10,
     "restSeconds": 20,
-    "intensityTarget": 7
+    "intensityTarget": 8
   },
   "muscles": {
     "primary": [
@@ -51,12 +51,15 @@
     ]
   },
   "jointStress": {
-    "left_shoulder": 0.3,
-    "right_shoulder": 0.3,
-    "left_elbow": 0.2,
-    "right_elbow": 0.2,
-    "left_wrist": 0.2,
-    "right_wrist": 0.2
+    "shoulder": {
+      "bilateral": 0.3
+    },
+    "elbow": {
+      "bilateral": 0.2
+    },
+    "wrist": {
+      "bilateral": 0.2
+    }
   },
   "fatigueCost": {
     "global": 4,
@@ -66,38 +69,43 @@
       "deltoids": 4
     },
     "joint": {
-      "left_shoulder": 3,
-      "right_shoulder": 3
+      "shoulder": {
+        "bilateral": 3
+      }
     }
   },
   "progression": [
     {
-      "id": "wall_push_easy_6x8s",
-      "labelKey": "progression.wall_push_easy_6x8s",
+      "id": "easy_6x8s",
+      "labelKey": "progression.wall_push.easy_6x8s",
+      "sets": 6,
       "holdSeconds": 8,
       "difficulty": 1,
-      "sets": 6
+      "variationKey": "variation.easy_force"
     },
     {
-      "id": "wall_push_standard_6x10s",
-      "labelKey": "progression.wall_push_standard_6x10s",
+      "id": "standard_6x10s",
+      "labelKey": "progression.wall_push.standard_6x10s",
+      "sets": 6,
       "holdSeconds": 10,
       "difficulty": 2,
-      "sets": 6
+      "variationKey": "variation.standard_force"
     },
     {
-      "id": "wall_push_strong_6x12s",
-      "labelKey": "progression.wall_push_strong_6x12s",
+      "id": "strong_6x12s",
+      "labelKey": "progression.wall_push.strong_6x12s",
+      "sets": 6,
       "holdSeconds": 12,
       "difficulty": 3,
-      "sets": 6
+      "variationKey": "variation.strong_force"
     },
     {
-      "id": "wall_push_strong_8x10s",
-      "labelKey": "progression.wall_push_strong_8x10s",
+      "id": "strong_8x10s",
+      "labelKey": "progression.wall_push.strong_8x10s",
+      "sets": 8,
       "holdSeconds": 10,
       "difficulty": 4,
-      "sets": 8
+      "variationKey": "variation.strong_force"
     }
   ],
   "regressions": [

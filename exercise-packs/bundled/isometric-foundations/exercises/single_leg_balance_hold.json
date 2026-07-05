@@ -1,6 +1,6 @@
 {
   "id": "single_leg_balance_hold",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.single_leg_balance_hold.name",
   "descriptionKey": "exercise.single_leg_balance_hold.description",
   "type": "balance",
@@ -11,12 +11,12 @@
     "none"
   ],
   "homeFriendly": true,
-  "sides": "left_right",
+  "sideModel": "left_right",
   "defaultPrescription": {
     "sets": 2,
     "holdSeconds": 20,
     "restSeconds": 20,
-    "intensityTarget": 7
+    "intensityTarget": 5
   },
   "muscles": {
     "primary": [
@@ -47,12 +47,15 @@
     ]
   },
   "jointStress": {
-    "left_ankle": 0.3,
-    "right_ankle": 0.3,
-    "left_knee": 0.1,
-    "right_knee": 0.1,
-    "left_hip": 0.2,
-    "right_hip": 0.2
+    "ankle": {
+      "workingSide": 0.3
+    },
+    "hip": {
+      "workingSide": 0.2
+    },
+    "knee": {
+      "workingSide": 0.1
+    }
   },
   "fatigueCost": {
     "global": 2,
@@ -62,34 +65,42 @@
       "core": 2
     },
     "joint": {
-      "left_ankle": 3,
-      "right_ankle": 3
+      "ankle": {
+        "workingSide": 3
+      },
+      "hip": {
+        "workingSide": 2
+      }
     }
   },
   "progression": [
     {
-      "id": "balance_supported_15s",
-      "labelKey": "progression.balance_supported_15s",
+      "id": "supported_15s",
+      "labelKey": "progression.single_leg_balance_hold.supported_15s",
       "holdSeconds": 15,
-      "difficulty": 1
+      "difficulty": 1,
+      "variationKey": "variation.supported"
     },
     {
-      "id": "balance_unsupported_20s",
-      "labelKey": "progression.balance_unsupported_20s",
+      "id": "unsupported_20s",
+      "labelKey": "progression.single_leg_balance_hold.unsupported_20s",
       "holdSeconds": 20,
-      "difficulty": 2
+      "difficulty": 2,
+      "variationKey": "variation.unsupported"
     },
     {
-      "id": "balance_unsupported_45s",
-      "labelKey": "progression.balance_unsupported_45s",
+      "id": "unsupported_45s",
+      "labelKey": "progression.single_leg_balance_hold.unsupported_45s",
       "holdSeconds": 45,
-      "difficulty": 3
+      "difficulty": 3,
+      "variationKey": "variation.unsupported"
     },
     {
-      "id": "balance_head_turns_30s",
-      "labelKey": "progression.balance_head_turns_30s",
+      "id": "head_turns_30s",
+      "labelKey": "progression.single_leg_balance_hold.head_turns_30s",
       "holdSeconds": 30,
-      "difficulty": 4
+      "difficulty": 4,
+      "variationKey": "variation.head_turns"
     }
   ],
   "regressions": [

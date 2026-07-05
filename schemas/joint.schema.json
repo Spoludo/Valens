@@ -1,5 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spoludo.github.io/valens/schemas/joint.schema.json",
   "title": "Valens Joint",
   "type": "object",
   "additionalProperties": false,
@@ -20,12 +21,18 @@
       "type": "number",
       "minimum": 0,
       "maximum": 1
+    },
+    "zeroToTenInteger": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
     }
   },
   "required": [
     "id",
     "nameKey",
-    "region"
+    "region",
+    "sides"
   ],
   "properties": {
     "id": {
@@ -35,6 +42,7 @@
       "$ref": "#/$defs/localizedKey"
     },
     "region": {
+      "type": "string",
       "enum": [
         "neck",
         "shoulder",
@@ -47,13 +55,18 @@
         "foot"
       ]
     },
-    "side": {
-      "enum": [
-        "left",
-        "right",
-        "bilateral",
-        "midline"
-      ]
+    "sides": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "left",
+          "right",
+          "midline"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
     },
     "sensitiveByDefault": {
       "type": "boolean"

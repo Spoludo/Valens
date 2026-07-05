@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "patterns": [
     {
       "id": "anti_extension_core",
@@ -46,12 +46,9 @@
         "adductors"
       ],
       "typicalJoints": [
-        "left_knee",
-        "right_knee",
-        "left_hip",
-        "right_hip",
-        "left_ankle",
-        "right_ankle"
+        "knee",
+        "hip",
+        "ankle"
       ],
       "functionalPurposeKey": "movement.squat.purpose",
       "recommendedWeeklyFrequency": {
@@ -78,8 +75,7 @@
         "erector_spinae"
       ],
       "typicalJoints": [
-        "left_hip",
-        "right_hip",
+        "hip",
         "lumbar_spine"
       ],
       "functionalPurposeKey": "movement.hip_extension.purpose",
@@ -108,12 +104,9 @@
         "serratus_anterior"
       ],
       "typicalJoints": [
-        "left_shoulder",
-        "right_shoulder",
-        "left_elbow",
-        "right_elbow",
-        "left_wrist",
-        "right_wrist"
+        "shoulder",
+        "elbow",
+        "wrist"
       ],
       "functionalPurposeKey": "movement.horizontal_push.purpose",
       "recommendedWeeklyFrequency": {
@@ -141,10 +134,8 @@
         "shoulder_stabilizers"
       ],
       "typicalJoints": [
-        "left_shoulder",
-        "right_shoulder",
-        "left_wrist",
-        "right_wrist",
+        "shoulder",
+        "wrist",
         "neck"
       ],
       "functionalPurposeKey": "movement.vertical_push.purpose",
@@ -175,12 +166,10 @@
         "shoulder_stabilizers"
       ],
       "typicalJoints": [
-        "left_shoulder",
-        "right_shoulder",
-        "left_wrist",
-        "right_wrist",
-        "left_hip",
-        "right_hip"
+        "shoulder",
+        "wrist",
+        "hip",
+        "knee"
       ],
       "functionalPurposeKey": "movement.quadruped_stability.purpose",
       "recommendedWeeklyFrequency": {
@@ -205,8 +194,7 @@
         "calves"
       ],
       "typicalJoints": [
-        "left_ankle",
-        "right_ankle"
+        "ankle"
       ],
       "functionalPurposeKey": "movement.calf_raise.purpose",
       "recommendedWeeklyFrequency": {
@@ -235,12 +223,9 @@
         "core"
       ],
       "typicalJoints": [
-        "left_ankle",
-        "right_ankle",
-        "left_hip",
-        "right_hip",
-        "left_knee",
-        "right_knee"
+        "ankle",
+        "hip",
+        "knee"
       ],
       "functionalPurposeKey": "movement.single_leg_balance.purpose",
       "recommendedWeeklyFrequency": {

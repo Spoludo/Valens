@@ -1,8 +1,108 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spoludo.github.io/valens/schemas/joints.schema.json",
   "title": "Valens Joint Collection",
   "type": "object",
   "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "localizedKey": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_.-]+$"
+    },
+    "zeroToOne": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "zeroToTenInteger": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "joint": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://spoludo.github.io/valens/schemas/joint.schema.json",
+      "title": "Valens Joint",
+      "type": "object",
+      "additionalProperties": false,
+      "$defs": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$"
+        },
+        "schemaVersion": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "localizedKey": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_.-]+$"
+        },
+        "zeroToOne": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "zeroToTenInteger": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        }
+      },
+      "required": [
+        "id",
+        "nameKey",
+        "region",
+        "sides"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "nameKey": {
+          "$ref": "#/$defs/localizedKey"
+        },
+        "region": {
+          "type": "string",
+          "enum": [
+            "neck",
+            "shoulder",
+            "elbow",
+            "wrist",
+            "spine",
+            "hip",
+            "knee",
+            "ankle",
+            "foot"
+          ]
+        },
+        "sides": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right",
+              "midline"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "sensitiveByDefault": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
   "required": [
     "schemaVersion",
     "joints"
@@ -15,6 +115,7 @@
       "type": "array",
       "items": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://spoludo.github.io/valens/schemas/joint.schema.json",
         "title": "Valens Joint",
         "type": "object",
         "additionalProperties": false,
@@ -35,12 +136,18 @@
             "type": "number",
             "minimum": 0,
             "maximum": 1
+          },
+          "zeroToTenInteger": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10
           }
         },
         "required": [
           "id",
           "nameKey",
-          "region"
+          "region",
+          "sides"
         ],
         "properties": {
           "id": {
@@ -50,6 +157,7 @@
             "$ref": "#/$defs/localizedKey"
           },
           "region": {
+            "type": "string",
             "enum": [
               "neck",
               "shoulder",
@@ -62,38 +170,25 @@
               "foot"
             ]
           },
-          "side": {
-            "enum": [
-              "left",
-              "right",
-              "bilateral",
-              "midline"
-            ]
+          "sides": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "left",
+                "right",
+                "midline"
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
           },
           "sensitiveByDefault": {
             "type": "boolean"
           }
         }
-      }
-    }
-  },
-  "$defs": {
-    "id": {
-      "type": "string",
-      "pattern": "^[a-z0-9][a-z0-9_-]*$"
-    },
-    "schemaVersion": {
-      "type": "string",
-      "pattern": "^\\d+\\.\\d+\\.\\d+$"
-    },
-    "localizedKey": {
-      "type": "string",
-      "pattern": "^[a-zA-Z0-9_.-]+$"
-    },
-    "zeroToOne": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 1
+      },
+      "minItems": 1
     }
   }
 }

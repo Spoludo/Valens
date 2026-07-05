@@ -1,6 +1,6 @@
 {
   "id": "pike_pushup_hold",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.pike_pushup_hold.name",
   "descriptionKey": "exercise.pike_pushup_hold.description",
   "type": "isometric",
@@ -12,12 +12,12 @@
     "mat"
   ],
   "homeFriendly": true,
-  "sides": "bilateral",
+  "sideModel": "bilateral",
   "defaultPrescription": {
     "sets": 3,
     "holdSeconds": 15,
     "restSeconds": 60,
-    "intensityTarget": 7
+    "intensityTarget": 8
   },
   "muscles": {
     "primary": [
@@ -48,11 +48,15 @@
     ]
   },
   "jointStress": {
-    "left_shoulder": 0.7,
-    "right_shoulder": 0.7,
-    "left_wrist": 0.6,
-    "right_wrist": 0.6,
-    "neck": 0.3
+    "shoulder": {
+      "bilateral": 0.7
+    },
+    "wrist": {
+      "bilateral": 0.6
+    },
+    "neck": {
+      "midline": 0.3
+    }
   },
   "fatigueCost": {
     "global": 7,
@@ -62,36 +66,42 @@
       "core": 3
     },
     "joint": {
-      "left_shoulder": 7,
-      "right_shoulder": 7,
-      "left_wrist": 6,
-      "right_wrist": 6
+      "shoulder": {
+        "bilateral": 7
+      },
+      "wrist": {
+        "bilateral": 6
+      }
     }
   },
   "progression": [
     {
-      "id": "pike_high_10s",
-      "labelKey": "progression.pike_high_10s",
+      "id": "high_pike_10s",
+      "labelKey": "progression.pike_pushup_hold.high_pike_10s",
       "holdSeconds": 10,
-      "difficulty": 2
+      "difficulty": 2,
+      "variationKey": "variation.high_pike"
     },
     {
-      "id": "pike_high_20s",
-      "labelKey": "progression.pike_high_20s",
+      "id": "high_pike_20s",
+      "labelKey": "progression.pike_pushup_hold.high_pike_20s",
       "holdSeconds": 20,
-      "difficulty": 3
+      "difficulty": 3,
+      "variationKey": "variation.high_pike"
     },
     {
-      "id": "pike_standard_15s",
-      "labelKey": "progression.pike_standard_15s",
+      "id": "standard_15s",
+      "labelKey": "progression.pike_pushup_hold.standard_15s",
       "holdSeconds": 15,
-      "difficulty": 4
+      "difficulty": 4,
+      "variationKey": "variation.standard"
     },
     {
-      "id": "pike_standard_30s",
-      "labelKey": "progression.pike_standard_30s",
+      "id": "standard_30s",
+      "labelKey": "progression.pike_pushup_hold.standard_30s",
       "holdSeconds": 30,
-      "difficulty": 5
+      "difficulty": 5,
+      "variationKey": "variation.standard"
     }
   ],
   "regressions": [

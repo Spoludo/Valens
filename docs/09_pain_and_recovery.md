@@ -1,9 +1,9 @@
 # 09 – Pain and Recovery
 
 **Project:** Valens  
-**Version:** 0.2  
+**Version:** 0.4  
 **Status:** Phase 1 specification  
-**Last updated:** 2026-07-05
+**Last updated:** 2026-07-06
 
 ---
 
@@ -11,7 +11,9 @@
 
 This document defines how Valens models pain and recovery.
 
-Valens does not diagnose or treat medical conditions. It uses pain and recovery reports to adapt training.
+Valens does not diagnose or treat medical conditions.
+
+It uses pain and recovery reports to adapt training.
 
 ---
 
@@ -35,26 +37,65 @@ This prevents confusing productive muscular work with problematic joint irritati
 
 ## 3. Pain localization
 
-Pain should be reportable by joint and side.
+Pain reports use anatomical joint id plus absolute side.
 
-Initial joints:
+Example:
+
+```text
+jointId = knee
+side = left
+```
+
+Another example:
+
+```text
+jointId = shoulder
+side = right
+```
+
+Midline structures use:
+
+```text
+jointId = lumbar_spine
+side = midline
+```
+
+Initial anatomical joints:
 
 ```text
 neck
-left_shoulder
-right_shoulder
-left_elbow
-right_elbow
-left_wrist
-right_wrist
+shoulder
+elbow
+wrist
 lumbar_spine
-left_hip
-right_hip
-left_knee
-right_knee
-left_ankle
-right_ankle
+hip
+knee
+ankle
 ```
+
+Supported pain sides:
+
+```text
+left
+right
+midline
+bilateral
+unknown
+```
+
+Exercise definitions do not usually encode absolute left/right sides.
+
+Instead, they define side roles such as:
+
+```text
+bilateral
+midline
+workingSide
+supportSide
+oppositeSide
+```
+
+The planner maps exercise-side roles to absolute pain sides when scoring exercises.
 
 ---
 
@@ -64,11 +105,14 @@ After exercise:
 
 1. Any joint discomfort?
 2. Where?
-3. Intensity 0–10
-4. Type
-5. Did it change during the hold/movement?
+3. Which side?
+4. Intensity 0–10
+5. Type
+6. Did it change during the hold or movement?
 
-The default flow must remain fast. Detailed input should appear only if pain is reported.
+The default flow must remain fast.
+
+Detailed input should appear only if pain is reported.
 
 ---
 
@@ -90,29 +134,75 @@ swelling/instability: avoid joint loading and suggest professional advice
 
 ## 6. Chronic sensitivity
 
-A joint can be marked sensitive.
+A joint and side can be marked sensitive.
 
 Example:
 
 ```text
-left_knee: sensitive
+jointId = knee
+side = left
+status = sensitive
 ```
 
-This permanently lowers progression aggressiveness for movements with high knee load.
+This permanently lowers progression aggressiveness for movements that load the left knee.
 
-Sensitive does not mean unusable. It means dose must be managed.
+Sensitive does not mean unusable.
+
+It means dose must be managed.
 
 ---
 
-## 7. Pain trend detection
+## 7. Pain matching against exercise metadata
+
+Pain reports are absolute.
+
+Exercise definitions are relative.
+
+Example:
+
+```text
+Pain:
+jointId = knee
+side = left
+
+Exercise:
+jointStress.knee.bilateral = 0.6
+
+Planner:
+bilateral maps to left + right, so this exercise receives a left-knee pain penalty.
+```
+
+For unilateral exercises:
+
+```text
+Pain:
+jointId = hip
+side = right
+
+Exercise:
+sideModel = left_right
+jointStress.hip.workingSide = 0.4
+
+If scheduled on right side:
+penalty applies.
+
+If scheduled on left side:
+right-hip penalty may not apply, unless supportSide or oppositeSide also loads the right hip.
+```
+
+---
+
+## 8. Pain trend detection
 
 Valens should detect patterns.
 
 Example:
 
 ```text
-Horse Stance left knee pain:
-1, 2, 2, 3, 4, 4
+Horse Stance
+jointId = knee
+side = left
+pain: 1, 2, 2, 3, 4, 4
 ```
 
 Planner response:
@@ -125,7 +215,7 @@ Planner response:
 
 ---
 
-## 8. Recovery inputs
+## 9. Recovery inputs
 
 Simple daily recovery check:
 
@@ -146,7 +236,7 @@ Poor / Okay / Good
 
 ---
 
-## 9. Recovery effect on planner
+## 10. Recovery effect on planner
 
 Poor recovery:
 
@@ -164,7 +254,7 @@ Good recovery:
 
 ---
 
-## 10. External activity effect
+## 11. External activity effect
 
 Basketball, hiking or long walking may increase lower-limb load.
 
@@ -174,22 +264,22 @@ Example:
 
 ```text
 basketball_shooting 40 min:
-    kneeLoad +3
-    ankleLoad +4
-    shoulderRepetition +2
-    cardio +3
+knee load +3
+ankle load +4
+shoulder repetition +2
+cardio +3
 ```
 
 ---
 
-## 11. Safety language
+## 12. Safety language
 
 Valens must avoid medical claims.
 
 Suggested language:
 
 ```text
-Your knee discomfort has increased recently. Today's plan reduces knee-dominant loading and emphasizes hip/core work. Consider consulting a professional if pain persists or worsens.
+Your left knee discomfort has increased recently. Today's plan reduces knee-dominant loading and emphasizes hip/core work. Consider consulting a professional if pain persists or worsens.
 ```
 
 Avoid:
@@ -200,21 +290,22 @@ This will fix your knee.
 
 ---
 
-## 12. Acceptance criteria
+## 13. Acceptance criteria
 
 Pain model must:
 
 - distinguish muscle effort from joint pain
-- localize pain
+- localize pain by anatomical joint and side
 - reduce progression after pain
 - influence planner selection
+- map exercise side roles to absolute pain sides
 - detect worsening trends
 - support sensitive joints
 - provide non-alarming guidance
 
 ---
 
-## 13. Summary
+## 14. Summary
 
 Pain is a planning signal.
 

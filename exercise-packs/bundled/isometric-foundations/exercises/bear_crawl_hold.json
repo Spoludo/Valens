@@ -1,6 +1,6 @@
 {
   "id": "bear_crawl_hold",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.bear_crawl_hold.name",
   "descriptionKey": "exercise.bear_crawl_hold.description",
   "type": "isometric",
@@ -12,7 +12,7 @@
     "mat"
   ],
   "homeFriendly": true,
-  "sides": "bilateral",
+  "sideModel": "bilateral",
   "defaultPrescription": {
     "sets": 3,
     "holdSeconds": 20,
@@ -52,12 +52,15 @@
     ]
   },
   "jointStress": {
-    "left_wrist": 0.5,
-    "right_wrist": 0.5,
-    "left_shoulder": 0.4,
-    "right_shoulder": 0.4,
-    "left_knee": 0.2,
-    "right_knee": 0.2
+    "wrist": {
+      "bilateral": 0.5
+    },
+    "shoulder": {
+      "bilateral": 0.4
+    },
+    "knee": {
+      "bilateral": 0.2
+    }
   },
   "fatigueCost": {
     "global": 6,
@@ -67,32 +70,36 @@
       "quadriceps": 3
     },
     "joint": {
-      "left_wrist": 5,
-      "right_wrist": 5
+      "wrist": {
+        "bilateral": 5
+      },
+      "shoulder": {
+        "bilateral": 4
+      }
     }
   },
   "progression": [
     {
-      "id": "bear_10s",
-      "labelKey": "progression.bear_10s",
+      "id": "knees_low_10s",
+      "labelKey": "progression.bear_crawl_hold.knees_low_10s",
       "holdSeconds": 10,
       "difficulty": 1
     },
     {
-      "id": "bear_20s",
-      "labelKey": "progression.bear_20s",
+      "id": "knees_low_20s",
+      "labelKey": "progression.bear_crawl_hold.knees_low_20s",
       "holdSeconds": 20,
       "difficulty": 2
     },
     {
-      "id": "bear_30s",
-      "labelKey": "progression.bear_30s",
+      "id": "standard_30s",
+      "labelKey": "progression.bear_crawl_hold.standard_30s",
       "holdSeconds": 30,
       "difficulty": 3
     },
     {
-      "id": "bear_45s",
-      "labelKey": "progression.bear_45s",
+      "id": "standard_45s",
+      "labelKey": "progression.bear_crawl_hold.standard_45s",
       "holdSeconds": 45,
       "difficulty": 4
     }

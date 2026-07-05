@@ -1,6 +1,6 @@
 {
   "id": "hollow_body_hold",
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "nameKey": "exercise.hollow_body_hold.name",
   "descriptionKey": "exercise.hollow_body_hold.description",
   "type": "isometric",
@@ -12,7 +12,7 @@
     "mat"
   ],
   "homeFriendly": true,
-  "sides": "midline",
+  "sideModel": "midline",
   "defaultPrescription": {
     "sets": 3,
     "holdSeconds": 20,
@@ -48,9 +48,12 @@
     ]
   },
   "jointStress": {
-    "lumbar_spine": 0.3,
-    "left_hip": 0.2,
-    "right_hip": 0.2
+    "lumbar_spine": {
+      "midline": 0.3
+    },
+    "hip": {
+      "bilateral": 0.2
+    }
   },
   "fatigueCost": {
     "global": 5,
@@ -59,33 +62,39 @@
       "hip_flexors": 4
     },
     "joint": {
-      "lumbar_spine": 3
+      "lumbar_spine": {
+        "midline": 3
+      }
     }
   },
   "progression": [
     {
-      "id": "hollow_tucked_15s",
-      "labelKey": "progression.hollow_tucked_15s",
+      "id": "tucked_15s",
+      "labelKey": "progression.hollow_body_hold.tucked_15s",
       "holdSeconds": 15,
-      "difficulty": 1
+      "difficulty": 1,
+      "variationKey": "variation.tucked"
     },
     {
-      "id": "hollow_tucked_25s",
-      "labelKey": "progression.hollow_tucked_25s",
+      "id": "tucked_25s",
+      "labelKey": "progression.hollow_body_hold.tucked_25s",
       "holdSeconds": 25,
-      "difficulty": 2
+      "difficulty": 2,
+      "variationKey": "variation.tucked"
     },
     {
-      "id": "hollow_one_leg_30s",
-      "labelKey": "progression.hollow_one_leg_30s",
+      "id": "one_leg_30s",
+      "labelKey": "progression.hollow_body_hold.one_leg_30s",
       "holdSeconds": 30,
-      "difficulty": 3
+      "difficulty": 3,
+      "variationKey": "variation.one_leg_extended"
     },
     {
-      "id": "hollow_standard_45s",
-      "labelKey": "progression.hollow_standard_45s",
+      "id": "standard_45s",
+      "labelKey": "progression.hollow_body_hold.standard_45s",
       "holdSeconds": 45,
-      "difficulty": 4
+      "difficulty": 4,
+      "variationKey": "variation.standard"
     }
   ],
   "regressions": [
