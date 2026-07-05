@@ -1,0 +1,3 @@
+[submodule "external/musclegroup-image-generator"]
+	path = external/musclegroup-image-generator
+	url = https://github.com/MertenD/musclegroup-image-generator
