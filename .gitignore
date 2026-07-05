@@ -39,5 +39,5 @@ google-services.json
 
 # Android Profiling
 *.hprof
-# Claude / Superpowers planning files
-docs/superpowers/
+# Claude / Superpowers planning files (specs/ and README.md are tracked)
+docs/superpowers/plans/
