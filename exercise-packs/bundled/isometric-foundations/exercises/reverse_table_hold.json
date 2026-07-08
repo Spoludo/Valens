@@ -112,7 +112,7 @@
     }
   ],
   "regressions": [
-    "glute_bridge_hold"
+    "low_bridge_15s"
   ],
   "alternatives": [
     "single_leg_glute_bridge_hold"

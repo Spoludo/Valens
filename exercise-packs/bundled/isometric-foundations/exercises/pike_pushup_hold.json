@@ -105,7 +105,7 @@
     }
   ],
   "regressions": [
-    "downward_dog_hold",
+    "high_pike_10s",
     "wall_push"
   ],
   "alternatives": [

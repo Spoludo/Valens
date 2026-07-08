@@ -105,7 +105,7 @@
     }
   ],
   "regressions": [
-    "tabletop_hold"
+    "knees_low_10s"
   ],
   "alternatives": [
     "plank_hold",

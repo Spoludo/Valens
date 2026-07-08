@@ -109,7 +109,7 @@
     }
   ],
   "regressions": [
-    "gentle_wall_push"
+    "easy_6x8s"
   ],
   "alternatives": [
     "plank_hold",

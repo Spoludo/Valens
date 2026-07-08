@@ -88,7 +88,7 @@
     }
   ],
   "regressions": [
-    "supported_calf_raise_hold"
+    "two_leg_20s"
   ],
   "alternatives": [
     "single_leg_balance_hold"

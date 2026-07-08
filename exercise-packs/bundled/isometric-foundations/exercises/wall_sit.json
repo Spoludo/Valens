@@ -103,12 +103,11 @@
     }
   ],
   "regressions": [
-    "wall_sit_120deg",
-    "chair_sit_hold"
+    "wall_sit_120deg_20s",
+    "wall_sit_110deg_30s"
   ],
   "alternatives": [
-    "horse_stance",
-    "supported_split_squat_hold"
+    "horse_stance"
   ],
   "contraindications": [
     "acute_knee_pain"

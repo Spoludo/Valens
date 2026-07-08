@@ -108,7 +108,7 @@
     }
   ],
   "regressions": [
-    "kneeling_plank_hold"
+    "knees_20s"
   ],
   "alternatives": [
     "hollow_body_hold",

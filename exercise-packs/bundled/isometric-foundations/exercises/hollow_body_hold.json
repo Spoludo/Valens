@@ -98,8 +98,8 @@
     }
   ],
   "regressions": [
-    "dead_bug_hold",
-    "tucked_hollow_hold"
+    "tucked_15s",
+    "tucked_25s"
   ],
   "alternatives": [
     "plank_hold"
