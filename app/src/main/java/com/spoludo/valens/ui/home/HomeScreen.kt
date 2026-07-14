@@ -2,8 +2,11 @@ package com.spoludo.valens.ui.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -15,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.spoludo.valens.ui.theme.ValensTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(onStart: () -> Unit = {}, modifier: Modifier = Modifier) {
     Scaffold(modifier = modifier.fillMaxSize()) { innerPadding ->
         Column(
             modifier = Modifier
@@ -31,6 +34,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 text = "Specification-first Android foundation.",
                 style = MaterialTheme.typography.bodyMedium,
             )
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(onClick = onStart) { Text("Start") }
         }
     }
 }

@@ -4,8 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.spoludo.valens.ui.home.HomeScreen
 import com.spoludo.valens.ui.theme.ValensTheme
+import com.spoludo.valens.ui.workout.WorkoutScreen
+import com.spoludo.valens.ui.workout.WorkoutViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +20,22 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ValensTheme {
-                HomeScreen()
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "home") {
+                    composable("home") {
+                        HomeScreen(onStart = { navController.navigate("workout") })
+                    }
+                    composable("workout") {
+                        val application = LocalContext.current.applicationContext as ValensApplication
+                        val viewModel: WorkoutViewModel = viewModel(
+                            factory = WorkoutViewModel.Factory(application.exerciseRepository),
+                        )
+                        WorkoutScreen(
+                            viewModel = viewModel,
+                            onFinish = { navController.popBackStack() },
+                        )
+                    }
+                }
             }
         }
     }
