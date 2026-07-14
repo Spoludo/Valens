@@ -20,6 +20,12 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    sourceSets {
+        getByName("main") {
+            assets.srcDirs("../exercise-packs/bundled/isometric-foundations")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
