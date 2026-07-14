@@ -21,6 +21,7 @@ sealed interface WorkoutUiState {
     data object Loading : WorkoutUiState
     data class Error(val message: String) : WorkoutUiState
     data class Running(
+        val exerciseId: String,
         val exerciseName: String,
         val phase: WorkoutPhase,
         val secondsRemaining: Int,
@@ -76,6 +77,7 @@ class WorkoutViewModel(
         val exercise = routine.getOrNull(state.exerciseIndex)
         val next = routine.getOrNull(state.exerciseIndex + 1)
         return WorkoutUiState.Running(
+            exerciseId = exercise?.id?.value ?: "",
             exerciseName = exercise?.let { displayName(it) } ?: "",
             phase = state.phase,
             secondsRemaining = state.secondsRemaining,

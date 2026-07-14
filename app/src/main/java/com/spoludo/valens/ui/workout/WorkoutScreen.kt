@@ -1,10 +1,14 @@
 package com.spoludo.valens.ui.workout
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -18,6 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.spoludo.valens.workout.engine.WorkoutPhase
+import com.spoludo.valens.workout.pose.RoutineExercisePoses
+import com.spoludo.valens.workout.pose.poseProgressFor
 
 @Composable
 fun WorkoutScreen(
@@ -66,10 +72,21 @@ private fun WorkoutContent(
         return
     }
 
+    val animatedProgress by animateFloatAsState(
+        targetValue = poseProgressFor(state.phase, state.secondsRemaining),
+        animationSpec = tween(durationMillis = 900),
+        label = "bodyPoseProgress",
+    )
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
+        BodyPoseIllustration(
+            targetPose = RoutineExercisePoses.targetPoseFor(state.exerciseId),
+            progressToTarget = animatedProgress,
+            modifier = Modifier.fillMaxWidth().height(200.dp),
+        )
         Text(text = state.exerciseName, style = MaterialTheme.typography.headlineMedium)
         Text(text = phaseLabel(state.phase), style = MaterialTheme.typography.titleLarge)
         Text(text = "${state.secondsRemaining}s", style = MaterialTheme.typography.displayLarge)
