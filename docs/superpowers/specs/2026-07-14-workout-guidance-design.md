@@ -152,7 +152,8 @@ object NoOpWorkoutAudioCuePlayer : WorkoutAudioCuePlayer {
 | `hasStarted` flips `false → true` | `"Let's begin. Prepare for <name>."` |
 | `COUNTDOWN → WORK` | `"Start."` |
 | `WORK`, `secondsRemaining == 10`, hold longer than 10s, guarded to fire once (`previous.secondsRemaining != 10`) | `"Ten seconds left."` |
-| `WORK → REST` | one rotating calm encouragement (`exerciseIndex % 5` into the fixed phrase list) |
+| `WORK → REST`, only on the exercise's **last** set (`current.setIndex >= exercise.defaultPrescription.sets - 1`) | one rotating calm encouragement (`exerciseIndex % 5` into the fixed phrase list) |
+| `WORK → REST`, any earlier set of a multi-set exercise | `null` |
 | `REST → COUNTDOWN` (advancing to the next exercise) | `"Next: <name>. Prepare."` |
 | `WORK → COMPLETE` (final exercise's last set) | `"Workout complete."` |
 | pause/resume toggles, mid-phase ticks, anything else | `null` — nothing spoken |
@@ -166,26 +167,35 @@ Almost there.
 Nice work.
 ```
 
-This keeps cues non-redundant and restrained: pausing/resuming never re-announces "Start"; the final exercise's last set transitions `WORK → COMPLETE` directly (per `WorkoutEngine`'s own logic, `REST` never precedes the last transition), so "Workout complete." is never preceded by an encouragement line; "Next: X. Prepare." replaces a separate countdown-entry announcement for exercises 2 through 7 (only exercise 1 gets the combined "Let's begin. Prepare for X." opening line).
+This keeps cues non-redundant and restrained: pausing/resuming never re-announces "Start"; the final exercise's last set transitions `WORK → COMPLETE` directly (per `WorkoutEngine`'s own logic, `REST` never precedes the last transition), so "Workout complete." is never preceded by an encouragement line; "Next: X. Prepare." replaces a separate countdown-entry announcement for exercises 2 through 7 (only exercise 1 gets the combined "Let's begin. Prepare for X." opening line); and encouragement is capped at most once **per exercise**, not once per set — for an exercise with multiple sets, only the last set's `WORK → REST` transition speaks a phrase, so mid-exercise set changes (e.g. set 1 → rest → set 2) stay silent. `WorkoutAudioCueGenerator` already has `routine` in scope, so checking `exercise.defaultPrescription.sets` against `current.setIndex` costs nothing extra.
 
 ## 11. Android player
 
 ```kotlin
 class AndroidWorkoutAudioCuePlayer(context: Context) : WorkoutAudioCuePlayer {
     @Volatile private var isReady = false
+    @Volatile private var isShutdown = false
+
     private val tts = TextToSpeech(context.applicationContext) { status ->
-        isReady = status == TextToSpeech.SUCCESS
+        isReady = status == TextToSpeech.SUCCESS && !isShutdown
     }
+
     override fun speak(text: String) {
-        if (!isReady) return
+        if (!isReady || isShutdown) return
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, text.hashCode().toString())
     }
-    override fun shutdown() { tts.stop(); tts.shutdown() }
+
+    override fun shutdown() {
+        isShutdown = true
+        tts.stop()
+        tts.shutdown()
+    }
 }
 ```
 
 - `QUEUE_FLUSH`, not `QUEUE_ADD`: each new cue interrupts whatever's still playing, so spoken guidance never lags behind the actual workout state after a burst of transitions.
 - Speaking before init completes is a silent no-op — cues issued in that window are dropped, not queued. Keeps the implementation minimal; acceptable because TTS engine binding is typically sub-second and losing an occasional opening cue is low-cost for an MVP.
+- `isShutdown` is a separate guard from `isReady`: the async `OnInitListener` callback can fire *after* `shutdown()` was already called (e.g. init completing just as the screen is torn down), so it also checks `!isShutdown` before flipping `isReady` true, and `speak()` checks both flags — any late `speak()` call after `shutdown()` is a safe no-op rather than touching a disposed `TextToSpeech` instance.
 - No manifest permission required — basic TTS playback needs none.
 - This is the only file in the feature that imports `android.speech.tts`; everything else in `workout/audio` is plain Kotlin.
 
@@ -208,7 +218,7 @@ class AndroidWorkoutAudioCuePlayer(context: Context) : WorkoutAudioCuePlayer {
 
 ## 14. Testing — audio
 
-- `WorkoutAudioCueGeneratorTest` — pure unit test covering every row of the mapping table in §10, plus the "nothing said" cases (pause/resume, mid-countdown ticks, mid-work ticks away from the 10-second mark).
+- `WorkoutAudioCueGeneratorTest` — pure unit test covering every row of the mapping table in §10, plus the "nothing said" cases (pause/resume, mid-countdown ticks, mid-work ticks away from the 10-second mark, and a multi-set exercise's non-final `WORK → REST` transitions).
 - No test for `AndroidWorkoutAudioCuePlayer` — Android-framework-dependent, same precedent as `AndroidAssetExercisePackJsonSource`; verified manually on-device per the acceptance criteria below.
 
 ---
