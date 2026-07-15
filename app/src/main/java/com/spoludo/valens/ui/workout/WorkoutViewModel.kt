@@ -39,7 +39,7 @@ sealed interface WorkoutUiState {
 
 class WorkoutViewModel(
     private val exerciseRepository: ExerciseRepository,
-    private val audioCuePlayer: WorkoutAudioCuePlayer = NoOpWorkoutAudioCuePlayer,
+    private var audioCuePlayer: WorkoutAudioCuePlayer = NoOpWorkoutAudioCuePlayer,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<WorkoutUiState>(WorkoutUiState.Loading)
     val uiState: StateFlow<WorkoutUiState> = _uiState.asStateFlow()
@@ -113,6 +113,10 @@ class WorkoutViewModel(
 
     fun onNext() {
         engine?.skip()
+    }
+
+    fun updateAudioCuePlayer(player: WorkoutAudioCuePlayer) {
+        audioCuePlayer = player
     }
 
     class Factory(
