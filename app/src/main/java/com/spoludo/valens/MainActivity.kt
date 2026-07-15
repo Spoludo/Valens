@@ -13,8 +13,17 @@ import com.spoludo.valens.ui.home.HomeScreen
 import com.spoludo.valens.ui.theme.ValensTheme
 import com.spoludo.valens.ui.workout.WorkoutScreen
 import com.spoludo.valens.ui.workout.WorkoutViewModel
+import com.spoludo.valens.workout.audio.AndroidWorkoutAudioCuePlayer
+import com.spoludo.valens.workout.audio.WorkoutAudioCuePlayer
 
 class MainActivity : ComponentActivity() {
+    private var _audioCuePlayer: WorkoutAudioCuePlayer? = null
+
+    private val audioCuePlayer: WorkoutAudioCuePlayer
+        get() {
+            return _audioCuePlayer ?: AndroidWorkoutAudioCuePlayer(this).also { _audioCuePlayer = it }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     composable("workout") {
                         val application = LocalContext.current.applicationContext as ValensApplication
                         val viewModel: WorkoutViewModel = viewModel(
-                            factory = WorkoutViewModel.Factory(application.exerciseRepository),
+                            factory = WorkoutViewModel.Factory(application.exerciseRepository, audioCuePlayer),
                         )
                         WorkoutScreen(
                             viewModel = viewModel,
@@ -38,5 +47,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        _audioCuePlayer?.shutdown()
+        super.onDestroy()
     }
 }

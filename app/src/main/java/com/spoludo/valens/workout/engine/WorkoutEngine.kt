@@ -1,7 +1,6 @@
 package com.spoludo.valens.workout.engine
 
 import com.spoludo.valens.domain.model.Exercise
-import com.spoludo.valens.domain.model.Prescription
 import com.spoludo.valens.workout.timer.WorkoutTicker
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,6 +9,9 @@ import kotlinx.coroutines.flow.asStateFlow
 enum class WorkoutPhase { COUNTDOWN, WORK, REST, COMPLETE }
 
 const val PREP_COUNTDOWN_SECONDS = 3
+
+fun totalWorkSeconds(exercise: Exercise): Int =
+    exercise.defaultPrescription.holdSeconds ?: exercise.defaultPrescription.durationSeconds ?: 0
 
 data class WorkoutEngineState(
     val exerciseIndex: Int = 0,
@@ -68,7 +70,7 @@ class WorkoutEngine(
         return when (current.phase) {
             WorkoutPhase.COUNTDOWN -> current.copy(
                 phase = WorkoutPhase.WORK,
-                secondsRemaining = workSeconds(prescription),
+                secondsRemaining = totalWorkSeconds(exercise),
             )
             WorkoutPhase.WORK -> {
                 val isLastSet = current.setIndex >= prescription.sets - 1
@@ -96,7 +98,4 @@ class WorkoutEngine(
             WorkoutPhase.COMPLETE -> current
         }
     }
-
-    private fun workSeconds(prescription: Prescription): Int =
-        prescription.holdSeconds ?: prescription.durationSeconds ?: 0
 }

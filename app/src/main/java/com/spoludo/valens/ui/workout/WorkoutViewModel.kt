@@ -7,6 +7,9 @@ import com.spoludo.valens.data.repository.ExerciseRepository
 import com.spoludo.valens.data.repository.ExerciseRepositoryResult
 import com.spoludo.valens.domain.model.Exercise
 import com.spoludo.valens.domain.model.ExercisePack
+import com.spoludo.valens.workout.audio.NoOpWorkoutAudioCuePlayer
+import com.spoludo.valens.workout.audio.WorkoutAudioCueGenerator
+import com.spoludo.valens.workout.audio.WorkoutAudioCuePlayer
 import com.spoludo.valens.workout.engine.FixedBeginnerRoutine
 import com.spoludo.valens.workout.engine.WorkoutEngine
 import com.spoludo.valens.workout.engine.WorkoutEngineState
@@ -36,6 +39,7 @@ sealed interface WorkoutUiState {
 
 class WorkoutViewModel(
     private val exerciseRepository: ExerciseRepository,
+    private val audioCuePlayer: WorkoutAudioCuePlayer = NoOpWorkoutAudioCuePlayer,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<WorkoutUiState>(WorkoutUiState.Loading)
     val uiState: StateFlow<WorkoutUiState> = _uiState.asStateFlow()
@@ -43,6 +47,7 @@ class WorkoutViewModel(
     private var engine: WorkoutEngine? = null
     private var routine: List<Exercise> = emptyList()
     private var displayNames: Map<String, String> = emptyMap()
+    private var lastCuedState: WorkoutEngineState? = null
 
     init {
         viewModelScope.launch {
@@ -66,10 +71,15 @@ class WorkoutViewModel(
             return
         }
         val newEngine = WorkoutEngine(routine, RealWorkoutTicker())
+        val cueGenerator = WorkoutAudioCueGenerator(routine, ::displayName)
         engine = newEngine
         viewModelScope.launch { newEngine.run() }
         viewModelScope.launch {
-            newEngine.state.collect { state -> _uiState.value = toUiState(state) }
+            newEngine.state.collect { state ->
+                cueGenerator.cueFor(lastCuedState, state)?.let { audioCuePlayer.speak(it) }
+                lastCuedState = state
+                _uiState.value = toUiState(state)
+            }
         }
     }
 
@@ -105,9 +115,12 @@ class WorkoutViewModel(
         engine?.skip()
     }
 
-    class Factory(private val exerciseRepository: ExerciseRepository) : ViewModelProvider.Factory {
+    class Factory(
+        private val exerciseRepository: ExerciseRepository,
+        private val audioCuePlayer: WorkoutAudioCuePlayer,
+    ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T =
-            WorkoutViewModel(exerciseRepository) as T
+            WorkoutViewModel(exerciseRepository, audioCuePlayer) as T
     }
 }
