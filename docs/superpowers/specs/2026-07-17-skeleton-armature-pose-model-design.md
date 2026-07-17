@@ -280,3 +280,71 @@ Manual, on-device:
 - `calf_raise_hold` visibly shows a lifted heel with the toe/contact point staying down — the concrete fix this revision was written for
 - all 7 exercises still render recognizably, across the countdown-to-target animation
 - no crash; portrait/landscape/rotation behavior from the prior spec is unaffected (this spec doesn't touch layout code)
+
+---
+
+## 15. Workout screen usability additions (2026-07-17c)
+
+**Unrelated to the skeleton/armature pose model above** (§1–§14) — bundled into this spec file at explicit request, so all current workout-screen-guidance work lives in one place. Three MVP usability requirements from on-device testing, not polish:
+
+### 15.1 Exercise progress within the routine
+
+The workout screen shows `Set Y/N` for the current exercise's sets, but nothing shows progress through the *routine* itself (which of the 7 exercises is this). `WorkoutUiState.Running` gains two fields:
+
+```kotlin
+val currentExerciseNumber: Int  // 1-based, for display
+val totalExercises: Int
+```
+
+`WorkoutEngineState.exerciseIndex` stays 0-based internally, unchanged — `currentExerciseNumber = state.exerciseIndex + 1` is computed once, in `WorkoutViewModel.toUiState`. `totalExercises = routine.size` (the ViewModel already holds `routine: List<Exercise>`).
+
+Display: portrait shows `"Exercise X/M"` and `"Set Y/N"` as two separate lines (there's room). Landscape combines them into one compact line, `"Exercise X/M · Set Y/N"`, to conserve the vertical space that §7's landscape layout already treats as scarce — consistent with that section's stated priority order (timer and controls outrank secondary text, and the illustration is what shrinks first, not this).
+
+### 15.2 Phase progress bar
+
+A non-interactive `LinearProgressIndicator` (Compose Material3 — already a dependency, no new library) placed directly below the numeric seconds countdown, in both portrait and landscape. It complements the numeric timer, not replaces it — both stay visible.
+
+```kotlin
+fun phaseProgressFor(phase: WorkoutPhase, secondsRemaining: Int, totalPhaseSeconds: Int): Float
+```
+
+A pure function (no Compose dependency, unit-testable) living in `ui/workout/` (its only consumer is `WorkoutScreen`, and unlike `poseProgressFor` — which drives actual skeleton-pose interpolation, a domain-adjacent animation input — this is purely a display-formatting concern, so it doesn't belong in `workout/pose/`):
+
+- `COMPLETE` → always `1f`.
+- `totalPhaseSeconds <= 0` → always `0f` (defensive: avoids division by zero: "if total duration is unknown or zero, safely return 0f or 1f as appropriate; do not crash" per the request — `COMPLETE` is the one case where `1f` is correct even with a degenerate duration).
+- Otherwise → `(1f - secondsRemaining / totalPhaseSeconds.toFloat()).coerceIn(0f, 1f)` — 0 at the start of the phase, approaching 1 as `secondsRemaining` approaches 0, for `COUNTDOWN`, `WORK`, and `REST` alike.
+
+`totalPhaseSeconds` is a **new** `WorkoutUiState.Running` field, computed in the ViewModel per the current phase (not a fixed value) — `PREP_COUNTDOWN_SECONDS` during `COUNTDOWN`, `totalWorkSeconds(exercise)` during `WORK` (reusing the existing shared helper from the audio-cue work), `exercise.defaultPrescription.restSeconds` during `REST`, `0` during `COMPLETE`/if the exercise is somehow unresolved. This keeps `WorkoutEngine` itself untouched and pure — the mapping from phase to "how long is this phase" is computed in the ViewModel from data the engine already exposes (the current exercise and phase), not added to the engine.
+
+### 15.3 Keep screen awake during active workouts
+
+Already specified and planned (implementation plan's `KeepScreenOn` task) — restated here so this requirement is documented in the spec, not just the plan. Scope: keep the screen on during `COUNTDOWN`/`WORK`/`REST`; release on `COMPLETE` or when leaving the workout screen; no `WAKE_LOCK` permission; not Application-global; not active on the Home screen.
+
+```kotlin
+@Composable
+fun KeepScreenOn(enabled: Boolean) {
+    val view = LocalView.current
+    DisposableEffect(view, enabled) {
+        val previous = view.keepScreenOn
+        view.keepScreenOn = enabled || previous
+        onDispose { view.keepScreenOn = previous }
+    }
+}
+```
+
+Called from `WorkoutScreen` with `enabled = state is WorkoutUiState.Running && state.phase != WorkoutPhase.COMPLETE`.
+
+### 15.4 Acceptance additions
+
+```bash
+./gradlew test
+./gradlew build
+```
+
+Manual, on-device (in addition to §14's list):
+- UI shows `Exercise X/M` (portrait: separate line; landscape: combined with `Set Y/N`)
+- UI still shows `Set Y/N`
+- the phase progress bar visibly advances during `COUNTDOWN`, `WORK`, and `REST`, and reaches full at `COMPLETE`
+- the numeric seconds countdown remains visible alongside the bar
+- timer and controls remain visible and reachable in both portrait and landscape with all these additions present
+- the screen stays awake during `COUNTDOWN`/`WORK`/`REST` and is free to sleep again after `COMPLETE` or leaving the workout screen; the Home screen is unaffected
