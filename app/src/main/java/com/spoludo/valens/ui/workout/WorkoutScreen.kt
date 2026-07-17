@@ -4,6 +4,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -81,6 +82,39 @@ private fun WorkoutContent(
     )
     val views = RoutineExercisePoses.targetPoseViewsFor(state.exerciseId)
 
+    BoxWithConstraints(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        val isLandscapeLike = maxWidth > maxHeight
+        if (isLandscapeLike) {
+            WorkoutContentLandscape(
+                state = state,
+                views = views,
+                animatedProgress = animatedProgress,
+                onStartOrResume = onStartOrResume,
+                onPause = onPause,
+                onNext = onNext,
+            )
+        } else {
+            WorkoutContentPortrait(
+                state = state,
+                views = views,
+                animatedProgress = animatedProgress,
+                onStartOrResume = onStartOrResume,
+                onPause = onPause,
+                onNext = onNext,
+            )
+        }
+    }
+}
+
+@Composable
+private fun WorkoutContentPortrait(
+    state: WorkoutUiState.Running,
+    views: List<BodyPoseView>,
+    animatedProgress: Float,
+    onStartOrResume: () -> Unit,
+    onPause: () -> Unit,
+    onNext: () -> Unit,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -106,6 +140,49 @@ private fun WorkoutContent(
                 Button(onClick = onStartOrResume) { Text(if (state.isStarted) "Resume" else "Start") }
             }
             Button(onClick = onNext) { Text("Next") }
+        }
+    }
+}
+
+@Composable
+private fun WorkoutContentLandscape(
+    state: WorkoutUiState.Running,
+    views: List<BodyPoseView>,
+    animatedProgress: Float,
+    onStartOrResume: () -> Unit,
+    onPause: () -> Unit,
+    onNext: () -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        PoseViewsRow(
+            views = views,
+            progressToTarget = animatedProgress,
+            illustrationHeight = 110.dp,
+            modifier = Modifier.weight(0.4f),
+        )
+        Column(
+            modifier = Modifier.weight(0.6f),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(text = state.exerciseName, style = MaterialTheme.typography.headlineSmall)
+            Text(text = phaseLabel(state.phase), style = MaterialTheme.typography.titleMedium)
+            Text(text = "${state.secondsRemaining}s", style = MaterialTheme.typography.displayLarge)
+            Text(text = "Set ${state.currentSet} / ${state.totalSets}", style = MaterialTheme.typography.bodyMedium)
+            state.nextExerciseName?.let {
+                Text(text = "Next: $it", style = MaterialTheme.typography.bodySmall)
+            }
+
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (state.isRunning) {
+                    Button(onClick = onPause) { Text("Pause") }
+                } else {
+                    Button(onClick = onStartOrResume) { Text(if (state.isStarted) "Resume" else "Start") }
+                }
+                Button(onClick = onNext) { Text("Next") }
+            }
         }
     }
 }
