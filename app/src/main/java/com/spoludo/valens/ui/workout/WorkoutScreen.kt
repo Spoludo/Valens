@@ -39,13 +39,16 @@ fun WorkoutScreen(
     modifier: Modifier = Modifier,
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val state = uiState
+
+    KeepScreenOn(enabled = state is WorkoutUiState.Running && state.phase != WorkoutPhase.COMPLETE)
 
     Scaffold(modifier = modifier.fillMaxSize()) { innerPadding ->
         Box(
             modifier = Modifier.fillMaxSize().padding(innerPadding).padding(24.dp),
             contentAlignment = Alignment.Center,
         ) {
-            when (val state = uiState) {
+            when (state) {
                 is WorkoutUiState.Loading -> CircularProgressIndicator()
                 is WorkoutUiState.Error -> Text(text = state.message)
                 is WorkoutUiState.Running -> WorkoutContent(
