@@ -83,7 +83,7 @@ private fun WorkoutContent(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         BodyPoseIllustration(
-            targetPose = RoutineExercisePoses.targetPoseFor(state.exerciseId),
+            targetPose = RoutineExercisePoses.targetPoseViewsFor(state.exerciseId).firstOrNull()?.pose,
             progressToTarget = animatedProgress,
             modifier = Modifier.fillMaxWidth().height(200.dp),
         )

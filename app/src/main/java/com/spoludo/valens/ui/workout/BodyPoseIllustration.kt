@@ -32,10 +32,12 @@ fun BodyPoseIllustration(
         modifier = modifier.semantics { contentDescription = "Body posture illustration" },
     ) {
         drawProp(pose.prop, propColor)
-        drawLimb(pose, figureColor, BodyPoint.LeftShoulder, BodyPoint.LeftElbow, BodyPoint.LeftWrist)
-        drawLimb(pose, figureColor, BodyPoint.RightShoulder, BodyPoint.RightElbow, BodyPoint.RightWrist)
+        drawLimb(pose, figureColor, BodyPoint.LeftShoulder, BodyPoint.LeftElbow, BodyPoint.LeftWrist, BodyPoint.LeftHand)
+        drawLimb(pose, figureColor, BodyPoint.RightShoulder, BodyPoint.RightElbow, BodyPoint.RightWrist, BodyPoint.RightHand)
         drawLimb(pose, figureColor, BodyPoint.LeftHip, BodyPoint.LeftKnee, BodyPoint.LeftAnkle)
         drawLimb(pose, figureColor, BodyPoint.RightHip, BodyPoint.RightKnee, BodyPoint.RightAnkle)
+        drawFoot(pose, figureColor, BodyPoint.LeftAnkle, BodyPoint.LeftHeel, BodyPoint.LeftToe)
+        drawFoot(pose, figureColor, BodyPoint.RightAnkle, BodyPoint.RightHeel, BodyPoint.RightToe)
         drawTorso(pose, figureColor)
         drawJoints(pose, figureColor)
         drawHead(pose, figureColor)
@@ -74,6 +76,12 @@ private fun DrawScope.drawLimb(pose: BodyPose, color: Color, vararg points: Body
             strokeWidth = 6f,
         )
     }
+}
+
+private fun DrawScope.drawFoot(pose: BodyPose, color: Color, ankle: BodyPoint, heel: BodyPoint, toe: BodyPoint) {
+    val anklePoint = scaledPoint(pose, ankle)
+    drawLine(color = color, start = anklePoint, end = scaledPoint(pose, heel), strokeWidth = 4f)
+    drawLine(color = color, start = anklePoint, end = scaledPoint(pose, toe), strokeWidth = 4f)
 }
 
 private fun DrawScope.drawTorso(pose: BodyPose, color: Color) {
