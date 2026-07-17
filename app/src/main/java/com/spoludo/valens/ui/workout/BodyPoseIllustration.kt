@@ -20,6 +20,7 @@ fun BodyPoseIllustration(
     targetPose: BodyPose?,
     modifier: Modifier = Modifier,
     progressToTarget: Float = 1f,
+    accessibilityDescription: String = "Body posture illustration",
 ) {
     val pose = if (targetPose == null) {
         RoutineExercisePoses.neutralStandingPose
@@ -29,7 +30,7 @@ fun BodyPoseIllustration(
     val figureColor = MaterialTheme.colorScheme.onSurface
     val propColor = MaterialTheme.colorScheme.outline
     Canvas(
-        modifier = modifier.semantics { contentDescription = "Body posture illustration" },
+        modifier = modifier.semantics { contentDescription = accessibilityDescription },
     ) {
         drawProp(pose.prop, propColor)
         drawLimb(pose, figureColor, BodyPoint.LeftShoulder, BodyPoint.LeftElbow, BodyPoint.LeftWrist, BodyPoint.LeftHand)

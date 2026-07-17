@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -164,7 +166,7 @@ private fun WorkoutContentLandscape(
             modifier = Modifier.weight(0.4f),
         )
         Column(
-            modifier = Modifier.weight(0.6f),
+            modifier = Modifier.weight(0.6f).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(text = state.exerciseName, style = MaterialTheme.typography.headlineSmall)
@@ -211,6 +213,7 @@ private fun PoseViewsRow(
                 BodyPoseIllustration(
                     targetPose = view.pose,
                     progressToTarget = progressToTarget,
+                    accessibilityDescription = "${view.label} posture illustration",
                     modifier = Modifier.fillMaxWidth().height(illustrationHeight),
                 )
                 Text(text = view.label, style = MaterialTheme.typography.labelSmall)
