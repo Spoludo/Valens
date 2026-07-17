@@ -20,8 +20,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.spoludo.valens.workout.engine.WorkoutPhase
+import com.spoludo.valens.workout.pose.BodyPoseView
 import com.spoludo.valens.workout.pose.RoutineExercisePoses
 import com.spoludo.valens.workout.pose.poseProgressFor
 
@@ -77,15 +79,17 @@ private fun WorkoutContent(
         animationSpec = tween(durationMillis = 900),
         label = "bodyPoseProgress",
     )
+    val views = RoutineExercisePoses.targetPoseViewsFor(state.exerciseId)
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        BodyPoseIllustration(
-            targetPose = RoutineExercisePoses.targetPoseViewsFor(state.exerciseId).firstOrNull()?.pose,
+        PoseViewsRow(
+            views = views,
             progressToTarget = animatedProgress,
-            modifier = Modifier.fillMaxWidth().height(200.dp),
+            illustrationHeight = 200.dp,
+            modifier = Modifier.fillMaxWidth(),
         )
         Text(text = state.exerciseName, style = MaterialTheme.typography.headlineMedium)
         Text(text = phaseLabel(state.phase), style = MaterialTheme.typography.titleLarge)
@@ -102,6 +106,38 @@ private fun WorkoutContent(
                 Button(onClick = onStartOrResume) { Text(if (state.isStarted) "Resume" else "Start") }
             }
             Button(onClick = onNext) { Text("Next") }
+        }
+    }
+}
+
+@Composable
+private fun PoseViewsRow(
+    views: List<BodyPoseView>,
+    progressToTarget: Float,
+    illustrationHeight: Dp,
+    modifier: Modifier = Modifier,
+) {
+    if (views.isEmpty()) {
+        BodyPoseIllustration(
+            targetPose = null,
+            progressToTarget = progressToTarget,
+            modifier = modifier.height(illustrationHeight),
+        )
+        return
+    }
+    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        views.forEach { view ->
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                BodyPoseIllustration(
+                    targetPose = view.pose,
+                    progressToTarget = progressToTarget,
+                    modifier = Modifier.fillMaxWidth().height(illustrationHeight),
+                )
+                Text(text = view.label, style = MaterialTheme.typography.labelSmall)
+            }
         }
     }
 }
