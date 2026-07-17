@@ -1,6 +1,8 @@
 package com.spoludo.valens.workout.pose
 
+import com.spoludo.valens.workout.pose.skeleton.SkeletonPose
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -11,13 +13,9 @@ class RoutineExercisePosesTest {
     )
 
     @Test
-    fun targetPoseViewsFor_knownExerciseIds_returnNonEmptyViewsWithAllTwentyPoints() {
+    fun targetPoseViewsFor_knownExerciseIds_returnNonEmptyLists() {
         for (id in knownExerciseIds) {
-            val views = RoutineExercisePoses.targetPoseViewsFor(id)
-            assertTrue("expected at least one view for $id", views.isNotEmpty())
-            for (view in views) {
-                assertEquals("point set mismatch for $id/${view.angle}", BodyPoint.entries.toSet(), view.pose.points.keys)
-            }
+            assertTrue("expected at least one view for $id", RoutineExercisePoses.targetPoseViewsFor(id).isNotEmpty())
         }
     }
 
@@ -29,11 +27,17 @@ class RoutineExercisePosesTest {
     }
 
     @Test
+    fun targetPoseViewsFor_wallPush_sideHasWallProp_frontHasNoProp() {
+        val views = RoutineExercisePoses.targetPoseViewsFor("wall_push")
+        assertEquals(PoseProp.WALL, views.first { it.angle == PoseViewAngle.SIDE }.prop)
+        assertEquals(PoseProp.NONE, views.first { it.angle == PoseViewAngle.FRONT }.prop)
+    }
+
+    @Test
     fun targetPoseViewsFor_otherKnownExerciseIds_returnExactlyOneView() {
         val singleViewIds = knownExerciseIds - "wall_push"
         for (id in singleViewIds) {
-            val views = RoutineExercisePoses.targetPoseViewsFor(id)
-            assertEquals("expected exactly one view for $id", 1, views.size)
+            assertEquals("expected exactly one view for $id", 1, RoutineExercisePoses.targetPoseViewsFor(id).size)
         }
     }
 
@@ -43,7 +47,14 @@ class RoutineExercisePosesTest {
     }
 
     @Test
-    fun neutralStandingPose_hasAllTwentyPoints() {
-        assertEquals(BodyPoint.entries.toSet(), RoutineExercisePoses.neutralStandingPose.points.keys)
+    fun targetPoseViewsFor_calfRaiseHold_hasNonZeroFootPitch() {
+        val pose = RoutineExercisePoses.targetPoseViewsFor("calf_raise_hold").first().pose
+        assertNotEquals(0f, pose.leftFootPitchDegrees)
+        assertNotEquals(0f, pose.rightFootPitchDegrees)
+    }
+
+    @Test
+    fun neutralStandingPose_isAllZeroAngles() {
+        assertEquals(SkeletonPose(), RoutineExercisePoses.neutralStandingPose)
     }
 }

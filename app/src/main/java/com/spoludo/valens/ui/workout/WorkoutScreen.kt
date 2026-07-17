@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.spoludo.valens.workout.engine.WorkoutPhase
 import com.spoludo.valens.workout.pose.BodyPoseView
+import com.spoludo.valens.workout.pose.PoseViewAngle
 import com.spoludo.valens.workout.pose.RoutineExercisePoses
 import com.spoludo.valens.workout.pose.poseProgressFor
 
@@ -198,7 +199,8 @@ private fun PoseViewsRow(
 ) {
     if (views.isEmpty()) {
         BodyPoseIllustration(
-            targetPose = null,
+            pose = null,
+            angle = PoseViewAngle.SIDE,
             progressToTarget = progressToTarget,
             modifier = modifier.height(illustrationHeight),
         )
@@ -211,8 +213,10 @@ private fun PoseViewsRow(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 BodyPoseIllustration(
-                    targetPose = view.pose,
+                    pose = view.pose,
+                    angle = view.angle,
                     progressToTarget = progressToTarget,
+                    prop = view.prop,
                     accessibilityDescription = "${view.label} posture illustration",
                     modifier = Modifier.fillMaxWidth().height(illustrationHeight),
                 )

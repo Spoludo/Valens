@@ -9,45 +9,72 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import com.spoludo.valens.workout.pose.BodyPoint
-import com.spoludo.valens.workout.pose.BodyPose
 import com.spoludo.valens.workout.pose.PoseProp
+import com.spoludo.valens.workout.pose.PoseViewAngle
 import com.spoludo.valens.workout.pose.RoutineExercisePoses
-import com.spoludo.valens.workout.pose.interpolatePose
+import com.spoludo.valens.workout.pose.skeleton.ProjectedPoint
+import com.spoludo.valens.workout.pose.skeleton.SkeletonJoint
+import com.spoludo.valens.workout.pose.skeleton.SkeletonPose
+import com.spoludo.valens.workout.pose.skeleton.interpolatePose
+import com.spoludo.valens.workout.pose.skeleton.project
+import com.spoludo.valens.workout.pose.skeleton.resolve
 
 @Composable
 fun BodyPoseIllustration(
-    targetPose: BodyPose?,
+    pose: SkeletonPose?,
+    angle: PoseViewAngle,
     modifier: Modifier = Modifier,
     progressToTarget: Float = 1f,
+    prop: PoseProp = PoseProp.NONE,
     accessibilityDescription: String = "Body posture illustration",
 ) {
-    val pose = if (targetPose == null) {
-        RoutineExercisePoses.neutralStandingPose
-    } else {
-        interpolatePose(RoutineExercisePoses.neutralStandingPose, targetPose, progressToTarget)
-    }
+    val target = pose ?: RoutineExercisePoses.neutralStandingPose
+    val interpolated = interpolatePose(RoutineExercisePoses.neutralStandingPose, target, progressToTarget)
+    val projected = project(resolve(interpolated), angle)
     val figureColor = MaterialTheme.colorScheme.onSurface
     val propColor = MaterialTheme.colorScheme.outline
     Canvas(
         modifier = modifier.semantics { contentDescription = accessibilityDescription },
     ) {
-        drawProp(pose.prop, propColor)
-        drawLimb(pose, figureColor, BodyPoint.LeftShoulder, BodyPoint.LeftElbow, BodyPoint.LeftWrist, BodyPoint.LeftHand)
-        drawLimb(pose, figureColor, BodyPoint.RightShoulder, BodyPoint.RightElbow, BodyPoint.RightWrist, BodyPoint.RightHand)
-        drawLimb(pose, figureColor, BodyPoint.LeftHip, BodyPoint.LeftKnee, BodyPoint.LeftAnkle)
-        drawLimb(pose, figureColor, BodyPoint.RightHip, BodyPoint.RightKnee, BodyPoint.RightAnkle)
-        drawFoot(pose, figureColor, BodyPoint.LeftAnkle, BodyPoint.LeftHeel, BodyPoint.LeftToe)
-        drawFoot(pose, figureColor, BodyPoint.RightAnkle, BodyPoint.RightHeel, BodyPoint.RightToe)
-        drawTorso(pose, figureColor)
-        drawJoints(pose, figureColor)
-        drawHead(pose, figureColor)
+        val fitted = fitToCanvas(projected, size.width, size.height)
+        drawProp(prop, propColor)
+        drawLimb(fitted, figureColor, SkeletonJoint.LeftShoulder, SkeletonJoint.LeftElbow, SkeletonJoint.LeftWrist, SkeletonJoint.LeftHand)
+        drawLimb(fitted, figureColor, SkeletonJoint.RightShoulder, SkeletonJoint.RightElbow, SkeletonJoint.RightWrist, SkeletonJoint.RightHand)
+        drawLimb(fitted, figureColor, SkeletonJoint.LeftHip, SkeletonJoint.LeftKnee, SkeletonJoint.LeftAnkle)
+        drawLimb(fitted, figureColor, SkeletonJoint.RightHip, SkeletonJoint.RightKnee, SkeletonJoint.RightAnkle)
+        drawFoot(fitted, figureColor, SkeletonJoint.LeftAnkle, SkeletonJoint.LeftHeel, SkeletonJoint.LeftToe)
+        drawFoot(fitted, figureColor, SkeletonJoint.RightAnkle, SkeletonJoint.RightHeel, SkeletonJoint.RightToe)
+        drawSpine(fitted, figureColor)
+        drawShoulderLine(fitted, figureColor)
+        drawPelvisLine(fitted, figureColor)
+        drawJoints(fitted, figureColor)
+        drawHead(fitted, figureColor)
     }
 }
 
-private fun DrawScope.scaledPoint(pose: BodyPose, bodyPoint: BodyPoint): Offset {
-    val normalized = pose.points.getValue(bodyPoint)
-    return Offset(normalized.x * size.width, normalized.y * size.height)
+private fun fitToCanvas(
+    projected: Map<SkeletonJoint, ProjectedPoint>,
+    canvasWidth: Float,
+    canvasHeight: Float,
+): Map<SkeletonJoint, Offset> {
+    val minX = projected.values.minOf { it.x }
+    val maxX = projected.values.maxOf { it.x }
+    val minY = projected.values.minOf { it.y }
+    val maxY = projected.values.maxOf { it.y }
+    val poseWidth = (maxX - minX).coerceAtLeast(0.01f)
+    val poseHeight = (maxY - minY).coerceAtLeast(0.01f)
+    val margin = 0.85f
+    val scale = minOf(canvasWidth / poseWidth, canvasHeight / poseHeight) * margin
+    val poseCenterX = (minX + maxX) / 2f
+    val poseCenterY = (minY + maxY) / 2f
+    val canvasCenterX = canvasWidth / 2f
+    val canvasCenterY = canvasHeight / 2f
+    return projected.mapValues { (_, point) ->
+        Offset(
+            canvasCenterX + (point.x - poseCenterX) * scale,
+            canvasCenterY + (point.y - poseCenterY) * scale,
+        )
+    }
 }
 
 private fun DrawScope.drawProp(prop: PoseProp, color: Color) {
@@ -68,42 +95,46 @@ private fun DrawScope.drawProp(prop: PoseProp, color: Color) {
     }
 }
 
-private fun DrawScope.drawLimb(pose: BodyPose, color: Color, vararg points: BodyPoint) {
-    for (i in 0 until points.size - 1) {
+private fun DrawScope.drawLimb(fitted: Map<SkeletonJoint, Offset>, color: Color, vararg joints: SkeletonJoint) {
+    for (i in 0 until joints.size - 1) {
         drawLine(
             color = color,
-            start = scaledPoint(pose, points[i]),
-            end = scaledPoint(pose, points[i + 1]),
+            start = fitted.getValue(joints[i]),
+            end = fitted.getValue(joints[i + 1]),
             strokeWidth = 6f,
         )
     }
 }
 
-private fun DrawScope.drawFoot(pose: BodyPose, color: Color, ankle: BodyPoint, heel: BodyPoint, toe: BodyPoint) {
-    val anklePoint = scaledPoint(pose, ankle)
-    drawLine(color = color, start = anklePoint, end = scaledPoint(pose, heel), strokeWidth = 4f)
-    drawLine(color = color, start = anklePoint, end = scaledPoint(pose, toe), strokeWidth = 4f)
+private fun DrawScope.drawFoot(fitted: Map<SkeletonJoint, Offset>, color: Color, ankle: SkeletonJoint, heel: SkeletonJoint, toe: SkeletonJoint) {
+    val anklePoint = fitted.getValue(ankle)
+    drawLine(color = color, start = anklePoint, end = fitted.getValue(heel), strokeWidth = 4f)
+    drawLine(color = color, start = anklePoint, end = fitted.getValue(toe), strokeWidth = 4f)
 }
 
-private fun DrawScope.drawTorso(pose: BodyPose, color: Color) {
-    val neck = scaledPoint(pose, BodyPoint.Neck)
-    val leftHip = scaledPoint(pose, BodyPoint.LeftHip)
-    val rightHip = scaledPoint(pose, BodyPoint.RightHip)
-    val hipCenter = Offset((leftHip.x + rightHip.x) / 2f, (leftHip.y + rightHip.y) / 2f)
-    drawLine(color = color, start = neck, end = hipCenter, strokeWidth = 6f)
+private fun DrawScope.drawSpine(fitted: Map<SkeletonJoint, Offset>, color: Color) {
+    drawLimb(fitted, color, SkeletonJoint.Pelvis, SkeletonJoint.SpineTop, SkeletonJoint.Neck, SkeletonJoint.Head)
 }
 
-private fun DrawScope.drawJoints(pose: BodyPose, color: Color) {
-    for (bodyPoint in BodyPoint.entries) {
-        if (bodyPoint == BodyPoint.Head) continue
-        drawCircle(color = color, radius = 5f, center = scaledPoint(pose, bodyPoint))
+private fun DrawScope.drawShoulderLine(fitted: Map<SkeletonJoint, Offset>, color: Color) {
+    drawLine(color = color, start = fitted.getValue(SkeletonJoint.LeftShoulder), end = fitted.getValue(SkeletonJoint.RightShoulder), strokeWidth = 6f)
+}
+
+private fun DrawScope.drawPelvisLine(fitted: Map<SkeletonJoint, Offset>, color: Color) {
+    drawLine(color = color, start = fitted.getValue(SkeletonJoint.LeftHip), end = fitted.getValue(SkeletonJoint.RightHip), strokeWidth = 6f)
+}
+
+private fun DrawScope.drawJoints(fitted: Map<SkeletonJoint, Offset>, color: Color) {
+    for (joint in SkeletonJoint.entries) {
+        if (joint == SkeletonJoint.Head) continue
+        drawCircle(color = color, radius = 5f, center = fitted.getValue(joint))
     }
 }
 
-private fun DrawScope.drawHead(pose: BodyPose, color: Color) {
+private fun DrawScope.drawHead(fitted: Map<SkeletonJoint, Offset>, color: Color) {
     drawCircle(
         color = color,
         radius = size.minDimension * 0.06f,
-        center = scaledPoint(pose, BodyPoint.Head),
+        center = fitted.getValue(SkeletonJoint.Head),
     )
 }
