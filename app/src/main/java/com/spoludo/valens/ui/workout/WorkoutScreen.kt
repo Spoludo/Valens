@@ -15,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -131,6 +132,11 @@ private fun WorkoutContentPortrait(
         Text(text = state.exerciseName, style = MaterialTheme.typography.headlineMedium)
         Text(text = phaseLabel(state.phase), style = MaterialTheme.typography.titleLarge)
         Text(text = "${state.secondsRemaining}s", style = MaterialTheme.typography.displayLarge)
+        LinearProgressIndicator(
+            progress = { phaseProgressFor(state.phase, state.secondsRemaining, state.totalPhaseSeconds) },
+            modifier = Modifier.fillMaxWidth(),
+        )
+        Text(text = "Exercise ${state.currentExerciseNumber} / ${state.totalExercises}", style = MaterialTheme.typography.bodyLarge)
         Text(text = "Set ${state.currentSet} / ${state.totalSets}", style = MaterialTheme.typography.bodyLarge)
         state.nextExerciseName?.let {
             Text(text = "Next: $it", style = MaterialTheme.typography.bodyMedium)
@@ -173,7 +179,14 @@ private fun WorkoutContentLandscape(
             Text(text = state.exerciseName, style = MaterialTheme.typography.headlineSmall)
             Text(text = phaseLabel(state.phase), style = MaterialTheme.typography.titleMedium)
             Text(text = "${state.secondsRemaining}s", style = MaterialTheme.typography.displayLarge)
-            Text(text = "Set ${state.currentSet} / ${state.totalSets}", style = MaterialTheme.typography.bodyMedium)
+            LinearProgressIndicator(
+                progress = { phaseProgressFor(state.phase, state.secondsRemaining, state.totalPhaseSeconds) },
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Text(
+                text = "Exercise ${state.currentExerciseNumber} / ${state.totalExercises} · Set ${state.currentSet} / ${state.totalSets}",
+                style = MaterialTheme.typography.bodyMedium,
+            )
             state.nextExerciseName?.let {
                 Text(text = "Next: $it", style = MaterialTheme.typography.bodySmall)
             }

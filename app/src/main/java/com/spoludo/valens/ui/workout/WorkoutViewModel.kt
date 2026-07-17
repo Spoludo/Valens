@@ -11,9 +11,11 @@ import com.spoludo.valens.workout.audio.NoOpWorkoutAudioCuePlayer
 import com.spoludo.valens.workout.audio.WorkoutAudioCueGenerator
 import com.spoludo.valens.workout.audio.WorkoutAudioCuePlayer
 import com.spoludo.valens.workout.engine.FixedBeginnerRoutine
+import com.spoludo.valens.workout.engine.PREP_COUNTDOWN_SECONDS
 import com.spoludo.valens.workout.engine.WorkoutEngine
 import com.spoludo.valens.workout.engine.WorkoutEngineState
 import com.spoludo.valens.workout.engine.WorkoutPhase
+import com.spoludo.valens.workout.engine.totalWorkSeconds
 import com.spoludo.valens.workout.timer.RealWorkoutTicker
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,6 +30,9 @@ sealed interface WorkoutUiState {
         val exerciseName: String,
         val phase: WorkoutPhase,
         val secondsRemaining: Int,
+        val totalPhaseSeconds: Int,
+        val currentExerciseNumber: Int,
+        val totalExercises: Int,
         val currentSet: Int,
         val totalSets: Int,
         val nextExerciseName: String?,
@@ -91,6 +96,9 @@ class WorkoutViewModel(
             exerciseName = exercise?.let { displayName(it) } ?: "",
             phase = state.phase,
             secondsRemaining = state.secondsRemaining,
+            totalPhaseSeconds = totalPhaseSecondsFor(state.phase, exercise),
+            currentExerciseNumber = state.exerciseIndex + 1,
+            totalExercises = routine.size,
             currentSet = state.setIndex + 1,
             totalSets = exercise?.defaultPrescription?.sets ?: 0,
             nextExerciseName = next?.let { displayName(it) },
@@ -98,6 +106,16 @@ class WorkoutViewModel(
             isStarted = state.hasStarted,
             isComplete = state.phase == WorkoutPhase.COMPLETE,
         )
+    }
+
+    private fun totalPhaseSecondsFor(phase: WorkoutPhase, exercise: Exercise?): Int {
+        if (exercise == null) return 0
+        return when (phase) {
+            WorkoutPhase.COUNTDOWN -> PREP_COUNTDOWN_SECONDS
+            WorkoutPhase.WORK -> totalWorkSeconds(exercise)
+            WorkoutPhase.REST -> exercise.defaultPrescription.restSeconds
+            WorkoutPhase.COMPLETE -> 0
+        }
     }
 
     private fun displayName(exercise: Exercise): String =
