@@ -233,6 +233,7 @@ private fun PoseViewsRow(
                     angle = view.angle,
                     progressToTarget = progressToTarget,
                     prop = view.prop,
+                    propNearEdge = view.propNearEdge,
                     accessibilityDescription = "${view.label} posture illustration",
                     modifier = Modifier.fillMaxWidth().height(illustrationHeight),
                 )

@@ -26,6 +26,7 @@ fun BodyPoseIllustration(
     modifier: Modifier = Modifier,
     progressToTarget: Float = 1f,
     prop: PoseProp = PoseProp.NONE,
+    propNearEdge: Boolean = false,
     accessibilityDescription: String = "Body posture illustration",
 ) {
     val target = pose ?: RoutineExercisePoses.neutralStandingPose
@@ -37,7 +38,7 @@ fun BodyPoseIllustration(
         modifier = modifier.semantics { contentDescription = accessibilityDescription },
     ) {
         val fitted = fitToCanvas(projected, size.width, size.height)
-        drawProp(prop, propColor)
+        drawProp(prop, propNearEdge, propColor)
         drawLimb(fitted, figureColor, SkeletonJoint.LeftShoulder, SkeletonJoint.LeftElbow, SkeletonJoint.LeftWrist, SkeletonJoint.LeftHand)
         drawLimb(fitted, figureColor, SkeletonJoint.RightShoulder, SkeletonJoint.RightElbow, SkeletonJoint.RightWrist, SkeletonJoint.RightHand)
         drawLimb(fitted, figureColor, SkeletonJoint.LeftHip, SkeletonJoint.LeftKnee, SkeletonJoint.LeftAnkle)
@@ -77,14 +78,12 @@ private fun fitToCanvas(
     }
 }
 
-private fun DrawScope.drawProp(prop: PoseProp, color: Color) {
+private fun DrawScope.drawProp(prop: PoseProp, propNearEdge: Boolean, color: Color) {
     when (prop) {
-        PoseProp.WALL -> drawLine(
-            color = color,
-            start = Offset(size.width * 0.9f, 0f),
-            end = Offset(size.width * 0.9f, size.height),
-            strokeWidth = 4f,
-        )
+        PoseProp.WALL -> {
+            val x = if (propNearEdge) size.width * 0.1f else size.width * 0.9f
+            drawLine(color = color, start = Offset(x, 0f), end = Offset(x, size.height), strokeWidth = 4f)
+        }
         PoseProp.FLOOR -> drawLine(
             color = color,
             start = Offset(0f, size.height * 0.9f),

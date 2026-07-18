@@ -7,4 +7,5 @@ data class BodyPoseView(
     val label: String,
     val pose: SkeletonPose,
     val prop: PoseProp = PoseProp.NONE,
+    val propNearEdge: Boolean = false,
 )
