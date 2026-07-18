@@ -26,6 +26,8 @@ object RoutineExercisePoses {
         rightShoulder = JointRotation(flexionDegrees = -105f),
         leftHip = JointRotation(flexionDegrees = 100f),
         rightHip = JointRotation(flexionDegrees = 100f),
+        leftFootPitchDegrees = -20f,
+        rightFootPitchDegrees = -20f,
     )
 
     private val calfRaiseHoldPose = SkeletonPose(
