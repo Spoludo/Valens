@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import com.spoludo.valens.workout.pose.PoseProp
@@ -52,8 +51,8 @@ fun BodyPoseIllustration(
         drawJoints(fitted, figureColor)
         drawHead(fitted, figureColor)
         when (angle) {
-            PoseViewAngle.SIDE -> drawFaceProfile(fitted, figureColor)
-            PoseViewAngle.FRONT -> drawFaceEyes(fitted, figureColor)
+            PoseViewAngle.SIDE -> drawFaceProfile(fitted, interpolated.rootLeanDegrees, figureColor)
+            PoseViewAngle.FRONT -> drawFaceEyes(fitted)
             PoseViewAngle.BACK -> Unit
         }
     }
@@ -144,27 +143,39 @@ private fun DrawScope.drawHead(fitted: Map<SkeletonJoint, Offset>, color: Color)
     )
 }
 
-private fun DrawScope.drawFaceProfile(fitted: Map<SkeletonJoint, Offset>, color: Color) {
+private fun DrawScope.drawFaceProfile(fitted: Map<SkeletonJoint, Offset>, rootLeanDegrees: Float, color: Color) {
     val headCenter = fitted.getValue(SkeletonJoint.Head)
     val headRadius = size.minDimension * 0.06f
-    // the head has no independent facing angle, so infer it from which way the spine leans
-    val faceSign = if (headCenter.x >= fitted.getValue(SkeletonJoint.Pelvis).x) 1f else -1f
-
     val eyeRadius = headRadius * 0.18f
+
+    // lying on the back (large negative root lean): the face looks up toward the ceiling, not sideways
+    if (rootLeanDegrees < -45f) {
+        drawCircle(color = Color.Black, radius = eyeRadius, center = Offset(headCenter.x, headCenter.y - headRadius * 0.35f))
+        drawLine(
+            color = color,
+            start = Offset(headCenter.x, headCenter.y - headRadius * 0.9f),
+            end = Offset(headCenter.x, headCenter.y - headRadius * 1.3f),
+            strokeWidth = 2f,
+        )
+        return
+    }
+
+    // otherwise infer facing direction from which way the spine leans
+    val faceSign = if (headCenter.x >= fitted.getValue(SkeletonJoint.Pelvis).x) 1f else -1f
     val eyeCenter = Offset(headCenter.x + faceSign * headRadius * 0.35f, headCenter.y - headRadius * 0.1f)
-    drawCircle(color = color, radius = eyeRadius, center = eyeCenter, style = Stroke(width = 2f))
+    drawCircle(color = Color.Black, radius = eyeRadius, center = eyeCenter)
 
     val noseStart = Offset(headCenter.x + faceSign * headRadius * 0.9f, headCenter.y + headRadius * 0.15f)
     val noseEnd = Offset(headCenter.x + faceSign * headRadius * 1.3f, headCenter.y + headRadius * 0.15f)
     drawLine(color = color, start = noseStart, end = noseEnd, strokeWidth = 2f)
 }
 
-private fun DrawScope.drawFaceEyes(fitted: Map<SkeletonJoint, Offset>, color: Color) {
+private fun DrawScope.drawFaceEyes(fitted: Map<SkeletonJoint, Offset>) {
     val headCenter = fitted.getValue(SkeletonJoint.Head)
     val headRadius = size.minDimension * 0.06f
     val eyeRadius = headRadius * 0.18f
     val eyeOffsetX = headRadius * 0.35f
     val eyeY = headCenter.y - headRadius * 0.1f
-    drawCircle(color = color, radius = eyeRadius, center = Offset(headCenter.x - eyeOffsetX, eyeY), style = Stroke(width = 2f))
-    drawCircle(color = color, radius = eyeRadius, center = Offset(headCenter.x + eyeOffsetX, eyeY), style = Stroke(width = 2f))
+    drawCircle(color = Color.Black, radius = eyeRadius, center = Offset(headCenter.x - eyeOffsetX, eyeY))
+    drawCircle(color = Color.Black, radius = eyeRadius, center = Offset(headCenter.x + eyeOffsetX, eyeY))
 }
