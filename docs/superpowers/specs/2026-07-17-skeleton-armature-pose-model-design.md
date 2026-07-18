@@ -377,7 +377,7 @@ No negation — matches the elbow/knee hinge convention exactly (`sagittalRotate
 
 **Sign convention** — worked through and verified against the two concrete scenarios the pose catalog actually needs (not asserted as one "universal" rule; a hinge's sign meaning is inherently pose-dependent, the same honest treatment §5 already gives elbow/knee, not a new standard):
 - `wall_push`: forearm reaching forward and slightly down (roughly `(0, -0.2, 0.98)`), `handPitchDegrees = +85` rotates the hand to point mostly `+y` (up), with `+z` all but unchanged — a flat palm against a vertical wall in front of the body, fingers pointing up the wall.
-- `reverse_table_hold`: forearm hanging straight down (`(0, -1, 0)`), `handPitchDegrees = -90` rotates the hand to exactly `(0, 0, -1)` — flat and horizontal, fingers pointing back toward the knees — a flat palm on the floor behind the torso.
+- `reverse_table_hold`: forearm hanging straight down (`(0, -1, 0)`), `handPitchDegrees = +90` rotates the hand to exactly `(0, 0, 1)` — flat and horizontal, fingers pointing toward the knees — a flat palm on the floor behind the torso. (This value's sign flipped from an original `-90` once §16.6 mirrored the whole `reverse_table_hold` pose across `z`; the sign is a property of that specific pose's orientation, not a fixed universal constant — same caveat as elbow/knee.)
 
 Both proof-tested (§16.2) on the raw resolved `Vec3`, the same way §11's existing sign-proof tests are.
 
@@ -388,7 +388,7 @@ Both proof-tested (§16.2) on the raw resolved `Vec3`, the same way §11's exist
   - a pose with `leftHandPitchDegrees = 90f` (arm otherwise neutral) resolves `LeftHand` to a position different from the `handPitchDegrees = 0f` case — hand pitch changes the hand tip relative to the wrist.
   - `handPitchDegrees = 0f` on a pose with a non-trivial forearm direction resolves `Hand` exactly on the ray `Wrist + forearmDirection * handLength` — the explicit regression guard for "unchanged when the new field is left at its default."
   - the `wall_push`-style scenario from §16.1: a forward-and-down forearm with `handPitchDegrees = 85f` resolves a `Hand` with `y` strictly greater than `Wrist`'s `y` (hand tips upward relative to the wrist, wall-contact orientation).
-  - the `reverse_table_hold`-style scenario from §16.1: a straight-down forearm with `handPitchDegrees = -90f` resolves a `Hand` with `y` approximately equal to `Wrist`'s `y` (hand goes flat/horizontal) and `z` strictly less than `Wrist`'s `z` (fingers point back toward the body) — floor-contact orientation.
+  - the `reverse_table_hold`-style scenario from §16.1: a straight-down forearm with `handPitchDegrees = 90f` resolves a `Hand` with `y` approximately equal to `Wrist`'s `y` (hand goes flat/horizontal) and `z` strictly greater than `Wrist`'s `z` (fingers point toward the knees) — floor-contact orientation.
 - `PoseInterpolationTest` (skeleton package) gains the two new fields in the existing progress-0/1/0.5 and clamp-above-1/below-0 assertions, the same shape as every other field already covered there.
 - Existing foot-pitch tests are unaffected — hand pitch is additive, foot pitch's formula is untouched.
 

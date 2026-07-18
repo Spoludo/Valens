@@ -139,13 +139,13 @@ class ForwardKinematicsTest {
     }
 
     @Test
-    fun resolve_handPitch_floorContactScenario_flattensHandBehindWrist() {
+    fun resolve_handPitch_floorContactScenario_flattensHandTowardTheKnees() {
         // matches reverse_table_hold's actual catalog angles: a straight-down forearm
-        val pose = SkeletonPose(rightHandPitchDegrees = -90f)
+        val pose = SkeletonPose(rightHandPitchDegrees = 90f)
         val resolved = resolve(pose)
         val wrist = resolved.getValue(SkeletonJoint.RightWrist)
         val hand = resolved.getValue(SkeletonJoint.RightHand)
         assertEquals(wrist.y, hand.y, 0.001f)
-        assertTrue("hand should point back toward the body for a floor-contact palm", hand.z < wrist.z)
+        assertTrue("hand should point toward the knees for a floor-contact palm", hand.z > wrist.z)
     }
 }
