@@ -16,6 +16,8 @@ fun interpolatePose(from: SkeletonPose, to: SkeletonPose, progress: Float): Skel
         rightShoulder = lerp(from.rightShoulder, to.rightShoulder, clamped),
         leftElbowDegrees = lerp(from.leftElbowDegrees, to.leftElbowDegrees, clamped),
         rightElbowDegrees = lerp(from.rightElbowDegrees, to.rightElbowDegrees, clamped),
+        leftHandPitchDegrees = lerp(from.leftHandPitchDegrees, to.leftHandPitchDegrees, clamped),
+        rightHandPitchDegrees = lerp(from.rightHandPitchDegrees, to.rightHandPitchDegrees, clamped),
         leftHip = lerp(from.leftHip, to.leftHip, clamped),
         rightHip = lerp(from.rightHip, to.rightHip, clamped),
         leftKneeDegrees = lerp(from.leftKneeDegrees, to.leftKneeDegrees, clamped),

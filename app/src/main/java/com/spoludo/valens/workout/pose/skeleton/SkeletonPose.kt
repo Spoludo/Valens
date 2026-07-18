@@ -6,6 +6,8 @@ data class SkeletonPose(
     val rightShoulder: JointRotation = JointRotation(),
     val leftElbowDegrees: Float = 0f,
     val rightElbowDegrees: Float = 0f,
+    val leftHandPitchDegrees: Float = 0f,
+    val rightHandPitchDegrees: Float = 0f,
     val leftHip: JointRotation = JointRotation(),
     val rightHip: JointRotation = JointRotation(),
     val leftKneeDegrees: Float = 0f,

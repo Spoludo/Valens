@@ -41,13 +41,15 @@ fun resolve(pose: SkeletonPose): Map<SkeletonJoint, Vec3> {
     val leftElbow = leftShoulder + leftUpperArmDir * SkeletonProportions.UPPER_ARM_LENGTH
     val leftForearmDir = sagittalRotate(leftUpperArmDir, pose.leftElbowDegrees)
     val leftWrist = leftElbow + leftForearmDir * SkeletonProportions.FOREARM_LENGTH
-    val leftHand = leftWrist + leftForearmDir * SkeletonProportions.HAND_LENGTH
+    val leftHandDir = sagittalRotate(leftForearmDir, pose.leftHandPitchDegrees)
+    val leftHand = leftWrist + leftHandDir * SkeletonProportions.HAND_LENGTH
 
     val rightUpperArmDir = limbDirection(pose.rightShoulder, sideSign = 1f)
     val rightElbow = rightShoulder + rightUpperArmDir * SkeletonProportions.UPPER_ARM_LENGTH
     val rightForearmDir = sagittalRotate(rightUpperArmDir, pose.rightElbowDegrees)
     val rightWrist = rightElbow + rightForearmDir * SkeletonProportions.FOREARM_LENGTH
-    val rightHand = rightWrist + rightForearmDir * SkeletonProportions.HAND_LENGTH
+    val rightHandDir = sagittalRotate(rightForearmDir, pose.rightHandPitchDegrees)
+    val rightHand = rightWrist + rightHandDir * SkeletonProportions.HAND_LENGTH
 
     val leftThighDir = limbDirection(pose.leftHip, sideSign = -1f)
     val leftKnee = leftHip + leftThighDir * SkeletonProportions.THIGH_LENGTH

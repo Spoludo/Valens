@@ -8,11 +8,13 @@ class PoseInterpolationTest {
         rootLeanDegrees = 0f,
         rightShoulder = JointRotation(flexionDegrees = 0f, abductionDegrees = 0f),
         rightFootPitchDegrees = 0f,
+        rightHandPitchDegrees = 0f,
     )
     private val to = SkeletonPose(
         rootLeanDegrees = 30f,
         rightShoulder = JointRotation(flexionDegrees = 90f, abductionDegrees = 20f),
         rightFootPitchDegrees = 40f,
+        rightHandPitchDegrees = 80f,
     )
 
     @Test
@@ -21,6 +23,7 @@ class PoseInterpolationTest {
         assertEquals(0f, result.rootLeanDegrees, 0.001f)
         assertEquals(0f, result.rightShoulder.flexionDegrees, 0.001f)
         assertEquals(0f, result.rightFootPitchDegrees, 0.001f)
+        assertEquals(0f, result.rightHandPitchDegrees, 0.001f)
     }
 
     @Test
@@ -29,6 +32,7 @@ class PoseInterpolationTest {
         assertEquals(30f, result.rootLeanDegrees, 0.001f)
         assertEquals(90f, result.rightShoulder.flexionDegrees, 0.001f)
         assertEquals(40f, result.rightFootPitchDegrees, 0.001f)
+        assertEquals(80f, result.rightHandPitchDegrees, 0.001f)
     }
 
     @Test
@@ -38,6 +42,7 @@ class PoseInterpolationTest {
         assertEquals(45f, result.rightShoulder.flexionDegrees, 0.001f)
         assertEquals(10f, result.rightShoulder.abductionDegrees, 0.001f)
         assertEquals(20f, result.rightFootPitchDegrees, 0.001f)
+        assertEquals(40f, result.rightHandPitchDegrees, 0.001f)
     }
 
     @Test
