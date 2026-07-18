@@ -432,3 +432,18 @@ Manual, on-device (in addition to §14/§15.4's lists):
 - `reverse_table_hold` reads as a tabletop: torso and thighs form one visibly straight, near-horizontal line; hands and feet both appear to touch the same floor line.
 - `plank_hold` reads as a proper forearm plank: one straight body line, forearms flat on the floor with the elbow visibly under the shoulder, no floating gap between the hand-floor-contact and the toe-floor-contact.
 - no crash; every other previously-verified exercise (`calf_raise_hold`, `single_leg_balance_hold`) is unaffected — this pass only touches the five exercises above plus the new hand-pitch/prop-placement mechanisms.
+
+### 16.6 On-device correction (2026-07-18b)
+
+First on-device pass on §16.4's values surfaced one real geometric bug and three accepted, non-critical limitations of the fixed-margin fit-to-canvas/prop-placement approach (§8, unchanged).
+
+**The real bug — toe direction disagreeing with leg direction:** `hollow_body_hold` and `reverse_table_hold` both point their legs toward `-z` (the collinear-extension identity's opposite-direction case, §16.4). But `toeDirection` is a *fixed* `+z` reference (§5, unaffected by hand pitch's addition), independent of the leg's own direction — so on both poses the toes visibly pointed back toward the torso instead of continuing away from it, which read as feet in a neutral/resting orientation rather than genuinely planted.
+
+**Fix — mirror the whole pose, don't patch the foot:** rather than special-casing the foot (e.g. an unprincipled `footPitchDegrees = 180f`, which would abuse the pitch parameter for a purpose it doesn't semantically mean), both poses are mirrored across `z` in their entirety — every angle negated (`rootLeanDegrees`, shoulder/hip flexion, knee, hand pitch). Neither pose has an inherent left/right-along-`z` asymmetry (unlike `wall_push`/`wall_sit`, nothing about "the wall" pins down which `z` direction is correct), so a full mirror is a free choice that preserves every previously-verified property (collinearity, matching floor-contact heights — re-verified numerically, unchanged up to sign) while making the legs point toward `+z` — the same direction the fixed toe reference already points. Toes now correctly continue away from the body.
+
+`hollowBodyHoldPose`: `rootLeanDegrees = -78f`; `leftShoulder`/`rightShoulder = JointRotation(flexionDegrees = -105f)`; `leftHip`/`rightHip = JointRotation(flexionDegrees = 100f)`.
+`reverseTableHoldPose`: `rootLeanDegrees = -82f`; `leftHip`/`rightHip = JointRotation(flexionDegrees = 82f)`; `leftKneeDegrees`/`rightKneeDegrees = -82f`; `leftHandPitchDegrees`/`rightHandPitchDegrees = 90f` (sign flipped to match the mirrored forearm-to-pelvis direction).
+
+**Accepted, not fixed (explicitly flagged non-critical by the request that reported them):**
+- `hollow_body_hold` and `plank_hold` both read as slightly elevated above their drawn floor line. The lowest resolved joint in each pose *is* mathematically at the pose's minimum `y`, matching where `fitToCanvas` + the `FLOOR` prop's fixed 90%-height line should align it — the residual visible gap is `fitToCanvas`'s fixed `0.85f` margin (§8), shared by every pose, not a per-exercise angle bug. Not touched in this pass.
+- `wall_sit`'s wall line no longer sits near the knees (§16.3's `propNearEdge` fix confirmed correct on-device) but doesn't touch the spine pixel-perfectly, for the same fixed-margin reason. Not touched in this pass.

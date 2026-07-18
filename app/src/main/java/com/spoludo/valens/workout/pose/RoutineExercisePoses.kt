@@ -21,11 +21,11 @@ object RoutineExercisePoses {
     )
 
     private val hollowBodyHoldPose = SkeletonPose(
-        rootLeanDegrees = 78f,
-        leftShoulder = JointRotation(flexionDegrees = 105f),
-        rightShoulder = JointRotation(flexionDegrees = 105f),
-        leftHip = JointRotation(flexionDegrees = -100f),
-        rightHip = JointRotation(flexionDegrees = -100f),
+        rootLeanDegrees = -78f,
+        leftShoulder = JointRotation(flexionDegrees = -105f),
+        rightShoulder = JointRotation(flexionDegrees = -105f),
+        leftHip = JointRotation(flexionDegrees = 100f),
+        rightHip = JointRotation(flexionDegrees = 100f),
     )
 
     private val calfRaiseHoldPose = SkeletonPose(
@@ -46,13 +46,13 @@ object RoutineExercisePoses {
     )
 
     private val reverseTableHoldPose = SkeletonPose(
-        rootLeanDegrees = 82f,
-        leftHip = JointRotation(flexionDegrees = -82f),
-        rightHip = JointRotation(flexionDegrees = -82f),
-        leftKneeDegrees = 82f,
-        rightKneeDegrees = 82f,
-        leftHandPitchDegrees = -90f,
-        rightHandPitchDegrees = -90f,
+        rootLeanDegrees = -82f,
+        leftHip = JointRotation(flexionDegrees = 82f),
+        rightHip = JointRotation(flexionDegrees = 82f),
+        leftKneeDegrees = -82f,
+        rightKneeDegrees = -82f,
+        leftHandPitchDegrees = 90f,
+        rightHandPitchDegrees = 90f,
     )
 
     private val plankHoldPose = SkeletonPose(
